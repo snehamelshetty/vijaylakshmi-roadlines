@@ -7,20 +7,22 @@ import { Textarea } from "@/components/ui/textarea";
 import { motion } from "framer-motion";
 import { Phone, Mail, MapPin, Clock, Send } from "lucide-react";
 import { toast } from "sonner";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const Contact = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
+  const { t } = useLanguage();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !email || !message) {
-      toast.error("Please fill in all required fields.");
+      toast.error(t("toast_fill_required"));
       return;
     }
-    toast.success("Message sent! We'll get back to you within 24 hours.");
+    toast.success(t("toast_message_sent"));
     setName("");
     setEmail("");
     setPhone("");
@@ -36,17 +38,16 @@ const Contact = () => {
             animate={{ opacity: 1, y: 0 }}
             className="text-4xl md:text-5xl font-bold text-secondary-foreground mb-4"
           >
-            Contact Us
+            {t("contact_title")}
           </motion.h1>
           <p className="text-secondary-foreground/80 max-w-2xl mx-auto text-lg">
-            Have questions? Reach out to us anytime. We're here to help.
+            {t("contact_subtitle")}
           </p>
         </div>
       </section>
 
       <section className="section-padding container mx-auto">
         <div className="grid lg:grid-cols-2 gap-12">
-          {/* Contact Form */}
           <motion.form
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -54,33 +55,32 @@ const Contact = () => {
             onSubmit={handleSubmit}
             className="bg-card rounded-xl p-8 card-shadow border border-border"
           >
-            <h2 className="text-2xl font-bold text-foreground mb-6">Send us a Message</h2>
+            <h2 className="text-2xl font-bold text-foreground mb-6">{t("send_message")}</h2>
             <div className="space-y-5">
               <div className="space-y-2">
-                <Label htmlFor="name">Full Name *</Label>
-                <Input id="name" placeholder="Your name" value={name} onChange={(e) => setName(e.target.value)} />
+                <Label htmlFor="name">{t("full_name")} *</Label>
+                <Input id="name" placeholder={t("full_name")} value={name} onChange={(e) => setName(e.target.value)} />
               </div>
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="email">Email *</Label>
+                  <Label htmlFor="email">{t("email")} *</Label>
                   <Input id="email" type="email" placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="phone">Phone</Label>
+                  <Label htmlFor="phone">{t("phone")}</Label>
                   <Input id="phone" type="tel" placeholder="+91 98765 43210" value={phone} onChange={(e) => setPhone(e.target.value)} />
                 </div>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="message">Message *</Label>
-                <Textarea id="message" placeholder="Tell us about your logistics needs..." rows={5} value={message} onChange={(e) => setMessage(e.target.value)} />
+                <Label htmlFor="message">{t("message")} *</Label>
+                <Textarea id="message" placeholder={t("message")} rows={5} value={message} onChange={(e) => setMessage(e.target.value)} />
               </div>
               <Button type="submit" variant="blue" size="lg">
-                <Send className="w-4 h-4" /> Send Message
+                <Send className="w-4 h-4" /> {t("send")}
               </Button>
             </div>
           </motion.form>
 
-          {/* Contact Info */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -88,13 +88,13 @@ const Contact = () => {
             className="space-y-6"
           >
             <div>
-              <h2 className="text-2xl font-bold text-foreground mb-6">Get in Touch</h2>
+              <h2 className="text-2xl font-bold text-foreground mb-6">{t("get_in_touch")}</h2>
               <div className="space-y-5">
                 {[
-                  { icon: MapPin, title: "Office Address", desc: "123, Transport Nagar, Hyderabad, Telangana 500001" },
-                  { icon: Phone, title: "Phone", desc: "+91 98765 43210" },
-                  { icon: Mail, title: "Email", desc: "info@vijayalakshmiroadlines.com" },
-                  { icon: Clock, title: "Business Hours", desc: "Mon - Sat: 8:00 AM - 8:00 PM | Sun: 9:00 AM - 5:00 PM" },
+                  { icon: MapPin, title: t("office_address"), desc: t("address_text") },
+                  { icon: Phone, title: t("phone"), desc: t("phone_text") },
+                  { icon: Mail, title: t("email"), desc: t("email_text") },
+                  { icon: Clock, title: t("business_hours"), desc: t("hours_text") },
                 ].map((item) => (
                   <div key={item.title} className="flex items-start gap-4">
                     <div className="w-12 h-12 rounded-lg bg-muted flex items-center justify-center shrink-0">
@@ -109,7 +109,6 @@ const Contact = () => {
               </div>
             </div>
 
-            {/* Map placeholder */}
             <div className="rounded-xl overflow-hidden border border-border h-64">
               <iframe
                 title="Office Location"

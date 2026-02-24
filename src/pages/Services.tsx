@@ -5,41 +5,20 @@ import { motion } from "framer-motion";
 import {
   Truck, Package, Warehouse, Settings, Zap, Shield, ArrowRight
 } from "lucide-react";
-
-const services = [
-  {
-    icon: Truck,
-    title: "Road Transportation",
-    desc: "Comprehensive road transport solutions connecting all major cities and towns across India with our modern fleet.",
-  },
-  {
-    icon: Package,
-    title: "Full Truck Load (FTL)",
-    desc: "Dedicated trucks exclusively for your cargo. Ideal for large shipments requiring direct, non-stop delivery.",
-  },
-  {
-    icon: Truck,
-    title: "Part Load (PTL)",
-    desc: "Cost-effective shared transportation for smaller consignments. Pay only for the space you use.",
-  },
-  {
-    icon: Warehouse,
-    title: "Warehousing & Storage",
-    desc: "Secure, climate-controlled warehousing facilities with inventory management and easy accessibility.",
-  },
-  {
-    icon: Settings,
-    title: "Fleet Management",
-    desc: "End-to-end fleet management solutions including maintenance, driver management, and route optimization.",
-  },
-  {
-    icon: Zap,
-    title: "Express Delivery",
-    desc: "Time-critical deliveries with guaranteed timelines. Perfect for urgent shipments and perishable goods.",
-  },
-];
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const Services = () => {
+  const { t } = useLanguage();
+
+  const services = [
+    { icon: Truck, title: t("road_transport"), desc: t("road_transport_desc") },
+    { icon: Package, title: t("ftl"), desc: t("ftl_desc") },
+    { icon: Truck, title: t("ptl"), desc: t("ptl_desc") },
+    { icon: Warehouse, title: t("warehousing"), desc: t("warehousing_desc") },
+    { icon: Settings, title: t("fleet_mgmt"), desc: t("fleet_mgmt_desc") },
+    { icon: Zap, title: t("express"), desc: t("express_desc") },
+  ];
+
   return (
     <Layout>
       <section className="gradient-primary section-padding">
@@ -49,10 +28,10 @@ const Services = () => {
             animate={{ opacity: 1, y: 0 }}
             className="text-4xl md:text-5xl font-bold text-primary-foreground mb-4"
           >
-            Our Services
+            {t("services_title")}
           </motion.h1>
           <p className="text-primary-foreground/80 max-w-2xl mx-auto text-lg">
-            Comprehensive logistics solutions designed to keep your business moving.
+            {t("services_subtitle")}
           </p>
         </div>
       </section>
@@ -75,7 +54,7 @@ const Services = () => {
               <p className="text-muted-foreground text-sm mb-5 leading-relaxed">{service.desc}</p>
               <Button variant="outline" size="sm" asChild>
                 <Link to="/book">
-                  Get Quote <ArrowRight className="w-4 h-4" />
+                  {t("get_quote")} <ArrowRight className="w-4 h-4" />
                 </Link>
               </Button>
             </motion.div>
@@ -86,12 +65,12 @@ const Services = () => {
       {/* CTA */}
       <section className="section-padding gradient-secondary">
         <div className="container mx-auto text-center">
-          <h2 className="text-3xl font-bold text-secondary-foreground mb-4">Need a Custom Solution?</h2>
+          <h2 className="text-3xl font-bold text-secondary-foreground mb-4">{t("custom_solution")}</h2>
           <p className="text-secondary-foreground/80 mb-8 max-w-md mx-auto">
-            Contact us to discuss tailored logistics solutions for your business.
+            {t("custom_solution_desc")}
           </p>
           <Button variant="hero" size="lg" asChild>
-            <Link to="/contact">Contact Us <ArrowRight className="w-5 h-5" /></Link>
+            <Link to="/contact">{t("contact_us")} <ArrowRight className="w-5 h-5" /></Link>
           </Button>
         </div>
       </section>

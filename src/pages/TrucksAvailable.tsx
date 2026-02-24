@@ -5,6 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { motion } from "framer-motion";
 import { Truck, MapPin, Filter } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const trucksData = [
   { id: 1, type: "Mini Truck", capacity: "1-2 Tons", location: "Hyderabad", available: true, image: "🚛" },
@@ -20,13 +21,14 @@ const trucksData = [
 const TrucksAvailable = () => {
   const [locationFilter, setLocationFilter] = useState("all");
   const [typeFilter, setTypeFilter] = useState("all");
+  const { t } = useLanguage();
 
-  const locations = [...new Set(trucksData.map((t) => t.location))];
-  const types = [...new Set(trucksData.map((t) => t.type))];
+  const locations = [...new Set(trucksData.map((tr) => tr.location))];
+  const types = [...new Set(trucksData.map((tr) => tr.type))];
 
-  const filtered = trucksData.filter((t) => {
-    if (locationFilter !== "all" && t.location !== locationFilter) return false;
-    if (typeFilter !== "all" && t.type !== typeFilter) return false;
+  const filtered = trucksData.filter((tr) => {
+    if (locationFilter !== "all" && tr.location !== locationFilter) return false;
+    if (typeFilter !== "all" && tr.type !== typeFilter) return false;
     return true;
   });
 
@@ -39,40 +41,38 @@ const TrucksAvailable = () => {
             animate={{ opacity: 1, y: 0 }}
             className="text-4xl md:text-5xl font-bold text-primary-foreground mb-4"
           >
-            Available Trucks
+            {t("trucks_title")}
           </motion.h1>
           <p className="text-primary-foreground/80 max-w-2xl mx-auto text-lg">
-            Browse our fleet and find the right truck for your shipment.
+            {t("trucks_subtitle")}
           </p>
         </div>
       </section>
 
       <section className="section-padding container mx-auto">
-        {/* Filters */}
         <div className="flex flex-wrap gap-4 mb-8 items-center">
           <Filter className="w-5 h-5 text-muted-foreground" />
           <Select value={locationFilter} onValueChange={setLocationFilter}>
             <SelectTrigger className="w-[180px]"><SelectValue placeholder="Location" /></SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Locations</SelectItem>
+              <SelectItem value="all">{t("all_locations")}</SelectItem>
               {locations.map((l) => (
                 <SelectItem key={l} value={l}>{l}</SelectItem>
               ))}
             </SelectContent>
           </Select>
           <Select value={typeFilter} onValueChange={setTypeFilter}>
-            <SelectTrigger className="w-[180px]"><SelectValue placeholder="Truck Type" /></SelectTrigger>
+            <SelectTrigger className="w-[180px]"><SelectValue placeholder={t("truck_type")} /></SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Types</SelectItem>
-              {types.map((t) => (
-                <SelectItem key={t} value={t}>{t}</SelectItem>
+              <SelectItem value="all">{t("all_types")}</SelectItem>
+              {types.map((tp) => (
+                <SelectItem key={tp} value={tp}>{tp}</SelectItem>
               ))}
             </SelectContent>
           </Select>
-          <span className="text-sm text-muted-foreground ml-auto">{filtered.length} trucks found</span>
+          <span className="text-sm text-muted-foreground ml-auto">{filtered.length} {t("trucks_found")}</span>
         </div>
 
-        {/* Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {filtered.map((truck, i) => (
             <motion.div
@@ -88,7 +88,7 @@ const TrucksAvailable = () => {
                 <MapPin className="w-3.5 h-3.5" /> {truck.location}
               </div>
               <div className="text-center text-sm text-muted-foreground mb-3">
-                Capacity: {truck.capacity}
+                {t("capacity")}: {truck.capacity}
               </div>
               <div className="text-center mb-4">
                 <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${
@@ -96,12 +96,12 @@ const TrucksAvailable = () => {
                     ? "bg-[hsl(142,70%,90%)] text-[hsl(142,70%,30%)]"
                     : "bg-destructive/10 text-destructive"
                 }`}>
-                  {truck.available ? "Available" : "Booked"}
+                  {truck.available ? t("available") : t("booked")}
                 </span>
               </div>
               {truck.available && (
                 <Button variant="blue" size="sm" className="w-full" asChild>
-                  <Link to="/book">Book Now</Link>
+                  <Link to="/book">{t("nav_book_now")}</Link>
                 </Button>
               )}
             </motion.div>
