@@ -7,28 +7,31 @@ import {
   Truck, Package, Clock, Shield, MapPin, Star, ArrowRight,
   Warehouse, Zap, Users
 } from "lucide-react";
-
-const stats = [
-  { icon: Truck, value: "500+", label: "Trucks" },
-  { icon: MapPin, value: "28+", label: "States Covered" },
-  { icon: Package, value: "10K+", label: "Deliveries/Month" },
-  { icon: Users, value: "2000+", label: "Happy Clients" },
-];
-
-const services = [
-  { icon: Truck, title: "Full Truck Load", desc: "Dedicated trucks for your large shipments across India." },
-  { icon: Package, title: "Part Load (PTL)", desc: "Cost-effective shared transportation for smaller loads." },
-  { icon: Warehouse, title: "Warehousing", desc: "Secure storage solutions with easy access and management." },
-  { icon: Zap, title: "Express Delivery", desc: "Time-critical deliveries with guaranteed timelines." },
-];
-
-const testimonials = [
-  { name: "Rajesh Kumar", company: "ABC Industries", text: "Vijayalakshmi Roadlines has been our logistics partner for 5 years. Exceptional reliability and service!", rating: 5 },
-  { name: "Priya Sharma", company: "XYZ Exports", text: "Their fleet management and tracking system gives us complete visibility. Highly recommended!", rating: 5 },
-  { name: "Suresh Reddy", company: "Reddy Enterprises", text: "On-time delivery, competitive rates, and professional team. The best in the business.", rating: 5 },
-];
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const Index = () => {
+  const { t } = useLanguage();
+
+  const stats = [
+    { icon: Truck, value: "500+", label: t("stat_trucks") },
+    { icon: MapPin, value: "28+", label: t("stat_states") },
+    { icon: Package, value: "10K+", label: t("stat_deliveries") },
+    { icon: Users, value: "2000+", label: t("stat_clients") },
+  ];
+
+  const services = [
+    { icon: Truck, title: t("home_ftl_title"), desc: t("home_ftl_desc") },
+    { icon: Package, title: t("home_ptl_title"), desc: t("home_ptl_desc") },
+    { icon: Warehouse, title: t("home_warehouse_title"), desc: t("home_warehouse_desc") },
+    { icon: Zap, title: t("home_express_title"), desc: t("home_express_desc") },
+  ];
+
+  const testimonials = [
+    { name: "Rajesh Kumar", company: "ABC Industries", text: "Vijayalakshmi Roadlines has been our logistics partner for 5 years. Exceptional reliability and service!", rating: 5 },
+    { name: "Priya Sharma", company: "XYZ Exports", text: "Their fleet management and tracking system gives us complete visibility. Highly recommended!", rating: 5 },
+    { name: "Suresh Reddy", company: "Reddy Enterprises", text: "On-time delivery, competitive rates, and professional team. The best in the business.", rating: 5 },
+  ];
+
   return (
     <Layout>
       {/* Hero */}
@@ -45,23 +48,23 @@ const Index = () => {
             className="max-w-2xl"
           >
             <span className="inline-block gradient-primary text-primary-foreground px-4 py-1.5 rounded-full text-sm font-semibold mb-6">
-              India's Trusted Logistics Partner
+              {t("hero_badge")}
             </span>
             <h1 className="text-4xl md:text-6xl font-extrabold text-card mb-6 leading-tight">
-              Reliable Logistics,{" "}
-              <span className="text-primary">Delivered.</span>
+              {t("hero_title_1")}{" "}
+              <span className="text-primary">{t("hero_title_2")}</span>
             </h1>
             <p className="text-lg text-card/80 mb-8 max-w-lg">
-              End-to-end transportation solutions with a fleet of 500+ trucks covering 28+ states. Your cargo, our commitment.
+              {t("hero_desc")}
             </p>
             <div className="flex flex-wrap gap-4">
               <Button variant="hero" size="lg" asChild>
                 <Link to="/book">
-                  Book a Truck <ArrowRight className="w-5 h-5" />
+                  {t("hero_book")} <ArrowRight className="w-5 h-5" />
                 </Link>
               </Button>
               <Button variant="heroOutline" size="lg" asChild>
-                <Link to="/services">Our Services</Link>
+                <Link to="/services">{t("hero_services")}</Link>
               </Button>
             </div>
           </motion.div>
@@ -91,9 +94,9 @@ const Index = () => {
       {/* Services Preview */}
       <section className="section-padding container mx-auto mt-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">Our Services</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">{t("home_services_title")}</h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
-            Comprehensive logistics solutions tailored to your business needs.
+            {t("home_services_desc")}
           </p>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -112,7 +115,7 @@ const Index = () => {
               <h3 className="font-semibold text-foreground mb-2">{service.title}</h3>
               <p className="text-sm text-muted-foreground mb-4">{service.desc}</p>
               <Link to="/services" className="text-secondary text-sm font-medium inline-flex items-center gap-1 hover:gap-2 transition-all">
-                Learn More <ArrowRight className="w-4 h-4" />
+                {t("learn_more")} <ArrowRight className="w-4 h-4" />
               </Link>
             </motion.div>
           ))}
@@ -123,16 +126,16 @@ const Index = () => {
       <section className="section-padding gradient-secondary">
         <div className="container mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-secondary-foreground mb-3">Why Choose Us?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-secondary-foreground mb-3">{t("why_choose_title")}</h2>
             <p className="text-secondary-foreground/80 max-w-xl mx-auto">
-              Trusted by 2000+ businesses across India for reliable logistics.
+              {t("why_choose_desc")}
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { icon: Shield, title: "Safe & Secure", desc: "GPS-tracked fleet with insurance coverage for every shipment." },
-              { icon: Clock, title: "On-Time Delivery", desc: "98% on-time delivery rate with real-time tracking updates." },
-              { icon: Star, title: "Best Rates", desc: "Competitive pricing with transparent billing, no hidden charges." },
+              { icon: Shield, title: t("safe_secure"), desc: t("safe_secure_desc") },
+              { icon: Clock, title: t("on_time"), desc: t("on_time_desc") },
+              { icon: Star, title: t("best_rates"), desc: t("best_rates_desc") },
             ].map((item, i) => (
               <motion.div
                 key={item.title}
@@ -156,12 +159,12 @@ const Index = () => {
       {/* Testimonials */}
       <section className="section-padding container mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">What Our Clients Say</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">{t("testimonials_title")}</h2>
         </div>
         <div className="grid md:grid-cols-3 gap-6">
-          {testimonials.map((t, i) => (
+          {testimonials.map((tl, i) => (
             <motion.div
-              key={t.name}
+              key={tl.name}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
@@ -169,14 +172,14 @@ const Index = () => {
               className="bg-card rounded-xl p-6 card-shadow"
             >
               <div className="flex gap-1 mb-3">
-                {Array.from({ length: t.rating }).map((_, j) => (
+                {Array.from({ length: tl.rating }).map((_, j) => (
                   <Star key={j} className="w-4 h-4 fill-primary text-primary" />
                 ))}
               </div>
-              <p className="text-muted-foreground text-sm mb-4 italic">"{t.text}"</p>
+              <p className="text-muted-foreground text-sm mb-4 italic">"{tl.text}"</p>
               <div>
-                <div className="font-semibold text-foreground text-sm">{t.name}</div>
-                <div className="text-xs text-muted-foreground">{t.company}</div>
+                <div className="font-semibold text-foreground text-sm">{tl.name}</div>
+                <div className="text-xs text-muted-foreground">{tl.company}</div>
               </div>
             </motion.div>
           ))}
@@ -187,14 +190,14 @@ const Index = () => {
       <section className="section-padding gradient-primary">
         <div className="container mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
-            Ready to Ship?
+            {t("ready_to_ship")}
           </h2>
           <p className="text-primary-foreground/80 mb-8 max-w-md mx-auto">
-            Get an instant quote and book your truck in minutes.
+            {t("ready_to_ship_desc")}
           </p>
           <Button variant="blue" size="lg" asChild>
             <Link to="/book">
-              Book a Truck Now <ArrowRight className="w-5 h-5" />
+              {t("book_truck_now")} <ArrowRight className="w-5 h-5" />
             </Link>
           </Button>
         </div>
