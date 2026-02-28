@@ -14,6 +14,7 @@ type TranslationKeys = {
   nav_services: string;
   nav_book: string;
   nav_trucks: string;
+  nav_tracking: string;
   nav_contact: string;
   nav_book_now: string;
 
@@ -163,6 +164,67 @@ type TranslationKeys = {
   toast_valid_weight: string;
   toast_fill_required: string;
   toast_message_sent: string;
+
+  // Auth
+  auth_login: string;
+  auth_signup: string;
+  auth_subtitle: string;
+  auth_password: string;
+  auth_loading: string;
+  auth_login_success: string;
+  auth_signup_success: string;
+  auth_no_account: string;
+  auth_have_account: string;
+
+  // Tracking
+  tracking_title: string;
+  tracking_subtitle: string;
+  tracking_enter_id: string;
+  tracking_track: string;
+  tracking_not_found: string;
+  tracking_shipment_details: string;
+  tracking_id_label: string;
+  tracking_status: string;
+  tracking_timeline: string;
+  tracking_live_location: string;
+  tracking_map_unavailable: string;
+
+  // Admin
+  admin_panel: string;
+  admin_dashboard: string;
+  admin_overview: string;
+  admin_trucks: string;
+  admin_bookings: string;
+  admin_logout: string;
+  admin_no_access: string;
+  admin_logged_out: string;
+  admin_total_trucks: string;
+  admin_total_bookings: string;
+  admin_delivered: string;
+  admin_pending: string;
+  admin_recent_bookings: string;
+  admin_no_bookings: string;
+  admin_manage_trucks: string;
+  admin_add_truck: string;
+  admin_edit_truck: string;
+  admin_truck_name: string;
+  admin_status: string;
+  admin_price_km: string;
+  admin_location: string;
+  admin_actions: string;
+  admin_save_changes: string;
+  admin_truck_updated: string;
+  admin_truck_added: string;
+  admin_truck_deleted: string;
+  admin_confirm_delete: string;
+  admin_maintenance: string;
+  admin_manage_bookings: string;
+  admin_all_status: string;
+  admin_update_status: string;
+  admin_new_status: string;
+  admin_event_location: string;
+  admin_event_desc: string;
+  admin_booking_updated: string;
 };
 
 const en: TranslationKeys = {
@@ -171,6 +233,7 @@ const en: TranslationKeys = {
   nav_services: "Services",
   nav_book: "Book a Truck",
   nav_trucks: "Trucks",
+  nav_tracking: "Tracking",
   nav_contact: "Contact",
   nav_book_now: "Book Now",
 
@@ -311,6 +374,64 @@ const en: TranslationKeys = {
   toast_valid_weight: "Please enter a valid weight.",
   toast_fill_required: "Please fill in all required fields.",
   toast_message_sent: "Message sent! We'll get back to you within 24 hours.",
+
+  auth_login: "Login",
+  auth_signup: "Sign Up",
+  auth_subtitle: "Access your admin dashboard to manage trucks and bookings.",
+  auth_password: "Password",
+  auth_loading: "Loading...",
+  auth_login_success: "Logged in successfully!",
+  auth_signup_success: "Account created! Please check your email to verify.",
+  auth_no_account: "Don't have an account? Sign up",
+  auth_have_account: "Already have an account? Login",
+
+  tracking_title: "Track Your Shipment",
+  tracking_subtitle: "Enter your tracking ID to see real-time shipment status and location.",
+  tracking_enter_id: "Enter Tracking ID",
+  tracking_track: "Track",
+  tracking_not_found: "No shipment found with this tracking ID.",
+  tracking_shipment_details: "Shipment Details",
+  tracking_id_label: "Tracking ID",
+  tracking_status: "Status",
+  tracking_timeline: "Status Timeline",
+  tracking_live_location: "Live Location",
+  tracking_map_unavailable: "Location data not available yet.",
+
+  admin_panel: "Admin Panel",
+  admin_dashboard: "Dashboard",
+  admin_overview: "Overview",
+  admin_trucks: "Trucks",
+  admin_bookings: "Bookings",
+  admin_logout: "Logout",
+  admin_no_access: "You don't have admin access.",
+  admin_logged_out: "Logged out successfully.",
+  admin_total_trucks: "Total Trucks",
+  admin_total_bookings: "Total Bookings",
+  admin_delivered: "Delivered",
+  admin_pending: "Pending",
+  admin_recent_bookings: "Recent Bookings",
+  admin_no_bookings: "No bookings yet.",
+  admin_manage_trucks: "Manage Trucks",
+  admin_add_truck: "Add Truck",
+  admin_edit_truck: "Edit Truck",
+  admin_truck_name: "Truck Name",
+  admin_status: "Status",
+  admin_price_km: "Price/km (₹)",
+  admin_location: "Location",
+  admin_actions: "Actions",
+  admin_save_changes: "Save Changes",
+  admin_truck_updated: "Truck updated successfully!",
+  admin_truck_added: "Truck added successfully!",
+  admin_truck_deleted: "Truck deleted.",
+  admin_confirm_delete: "Are you sure you want to delete this?",
+  admin_maintenance: "Maintenance",
+  admin_manage_bookings: "Manage Bookings",
+  admin_all_status: "All Status",
+  admin_update_status: "Update Booking Status",
+  admin_new_status: "New Status",
+  admin_event_location: "Event Location",
+  admin_event_desc: "Description",
+  admin_booking_updated: "Booking updated!",
 };
 
 const hi: TranslationKeys = {
@@ -459,6 +580,63 @@ const hi: TranslationKeys = {
   toast_valid_weight: "कृपया एक वैध वजन दर्ज करें।",
   toast_fill_required: "कृपया सभी आवश्यक फ़ील्ड भरें।",
   toast_message_sent: "संदेश भेजा गया! हम 24 घंटे के भीतर आपसे संपर्क करेंगे।",
+
+  nav_tracking: "ट्रैकिंग",
+  auth_login: "लॉगिन",
+  auth_signup: "साइन अप",
+  auth_subtitle: "ट्रक और बुकिंग प्रबंधित करने के लिए अपने एडमिन डैशबोर्ड तक पहुँचें।",
+  auth_password: "पासवर्ड",
+  auth_loading: "लोड हो रहा है...",
+  auth_login_success: "सफलतापूर्वक लॉगिन हो गया!",
+  auth_signup_success: "खाता बनाया गया! सत्यापन के लिए अपना ईमेल जाँचें।",
+  auth_no_account: "खाता नहीं है? साइन अप करें",
+  auth_have_account: "पहले से खाता है? लॉगिन करें",
+  tracking_title: "अपना शिपमेंट ट्रैक करें",
+  tracking_subtitle: "रीयल-टाइम शिपमेंट स्थिति और स्थान देखने के लिए अपनी ट्रैकिंग ID दर्ज करें।",
+  tracking_enter_id: "ट्रैकिंग ID दर्ज करें",
+  tracking_track: "ट्रैक करें",
+  tracking_not_found: "इस ट्रैकिंग ID से कोई शिपमेंट नहीं मिला।",
+  tracking_shipment_details: "शिपमेंट विवरण",
+  tracking_id_label: "ट्रैकिंग ID",
+  tracking_status: "स्थिति",
+  tracking_timeline: "स्थिति समयरेखा",
+  tracking_live_location: "लाइव स्थान",
+  tracking_map_unavailable: "स्थान डेटा अभी उपलब्ध नहीं है।",
+  admin_panel: "एडमिन पैनल",
+  admin_dashboard: "डैशबोर्ड",
+  admin_overview: "अवलोकन",
+  admin_trucks: "ट्रक",
+  admin_bookings: "बुकिंग",
+  admin_logout: "लॉगआउट",
+  admin_no_access: "आपके पास एडमिन एक्सेस नहीं है।",
+  admin_logged_out: "सफलतापूर्वक लॉगआउट हो गया।",
+  admin_total_trucks: "कुल ट्रक",
+  admin_total_bookings: "कुल बुकिंग",
+  admin_delivered: "डिलीवर किया गया",
+  admin_pending: "लंबित",
+  admin_recent_bookings: "हाल की बुकिंग",
+  admin_no_bookings: "अभी कोई बुकिंग नहीं।",
+  admin_manage_trucks: "ट्रक प्रबंधित करें",
+  admin_add_truck: "ट्रक जोड़ें",
+  admin_edit_truck: "ट्रक संपादित करें",
+  admin_truck_name: "ट्रक का नाम",
+  admin_status: "स्थिति",
+  admin_price_km: "मूल्य/km (₹)",
+  admin_location: "स्थान",
+  admin_actions: "कार्रवाई",
+  admin_save_changes: "परिवर्तन सहेजें",
+  admin_truck_updated: "ट्रक सफलतापूर्वक अपडेट किया गया!",
+  admin_truck_added: "ट्रक सफलतापूर्वक जोड़ा गया!",
+  admin_truck_deleted: "ट्रक हटाया गया।",
+  admin_confirm_delete: "क्या आप वाकई इसे हटाना चाहते हैं?",
+  admin_maintenance: "रखरखाव",
+  admin_manage_bookings: "बुकिंग प्रबंधित करें",
+  admin_all_status: "सभी स्थिति",
+  admin_update_status: "बुकिंग स्थिति अपडेट करें",
+  admin_new_status: "नई स्थिति",
+  admin_event_location: "घटना स्थान",
+  admin_event_desc: "विवरण",
+  admin_booking_updated: "बुकिंग अपडेट हो गई!",
 };
 
 const mr: TranslationKeys = {
@@ -607,6 +785,63 @@ const mr: TranslationKeys = {
   toast_valid_weight: "कृपया वैध वजन प्रविष्ट करा.",
   toast_fill_required: "कृपया सर्व आवश्यक फील्ड भरा.",
   toast_message_sent: "संदेश पाठवला! आम्ही 24 तासांत तुमच्याशी संपर्क करू.",
+
+  nav_tracking: "ट्रॅकिंग",
+  auth_login: "लॉगिन",
+  auth_signup: "साइन अप",
+  auth_subtitle: "ट्रक आणि बुकिंग व्यवस्थापित करण्यासाठी तुमच्या एडमिन डॅशबोर्डवर प्रवेश करा.",
+  auth_password: "पासवर्ड",
+  auth_loading: "लोड होत आहे...",
+  auth_login_success: "यशस्वीरित्या लॉगिन झाले!",
+  auth_signup_success: "खाते तयार झाले! सत्यापनासाठी तुमचा ईमेल तपासा.",
+  auth_no_account: "खाते नाही? साइन अप करा",
+  auth_have_account: "आधीच खाते आहे? लॉगिन करा",
+  tracking_title: "तुमचे शिपमेंट ट्रॅक करा",
+  tracking_subtitle: "रिअल-टाइम शिपमेंट स्थिती आणि स्थान पाहण्यासाठी तुमची ट्रॅकिंग ID प्रविष्ट करा.",
+  tracking_enter_id: "ट्रॅकिंग ID प्रविष्ट करा",
+  tracking_track: "ट्रॅक करा",
+  tracking_not_found: "या ट्रॅकिंग ID ने कोणतेही शिपमेंट सापडले नाही.",
+  tracking_shipment_details: "शिपमेंट तपशील",
+  tracking_id_label: "ट्रॅकिंग ID",
+  tracking_status: "स्थिती",
+  tracking_timeline: "स्थिती टाइमलाइन",
+  tracking_live_location: "लाइव्ह स्थान",
+  tracking_map_unavailable: "स्थान डेटा अजून उपलब्ध नाही.",
+  admin_panel: "एडमिन पॅनेल",
+  admin_dashboard: "डॅशबोर्ड",
+  admin_overview: "आढावा",
+  admin_trucks: "ट्रक",
+  admin_bookings: "बुकिंग",
+  admin_logout: "लॉगआउट",
+  admin_no_access: "तुमच्याकडे एडमिन प्रवेश नाही.",
+  admin_logged_out: "यशस्वीरित्या लॉगआउट झाले.",
+  admin_total_trucks: "एकूण ट्रक",
+  admin_total_bookings: "एकूण बुकिंग",
+  admin_delivered: "वितरित",
+  admin_pending: "प्रलंबित",
+  admin_recent_bookings: "अलीकडील बुकिंग",
+  admin_no_bookings: "अजून कोणतीही बुकिंग नाही.",
+  admin_manage_trucks: "ट्रक व्यवस्थापित करा",
+  admin_add_truck: "ट्रक जोडा",
+  admin_edit_truck: "ट्रक संपादित करा",
+  admin_truck_name: "ट्रकचे नाव",
+  admin_status: "स्थिती",
+  admin_price_km: "किंमत/km (₹)",
+  admin_location: "ठिकाण",
+  admin_actions: "कृती",
+  admin_save_changes: "बदल जतन करा",
+  admin_truck_updated: "ट्रक यशस्वीरित्या अपडेट झाला!",
+  admin_truck_added: "ट्रक यशस्वीरित्या जोडला गेला!",
+  admin_truck_deleted: "ट्रक हटवला गेला.",
+  admin_confirm_delete: "तुम्हाला हे खरोखर हटवायचे आहे का?",
+  admin_maintenance: "देखभाल",
+  admin_manage_bookings: "बुकिंग व्यवस्थापित करा",
+  admin_all_status: "सर्व स्थिती",
+  admin_update_status: "बुकिंग स्थिती अपडेट करा",
+  admin_new_status: "नवीन स्थिती",
+  admin_event_location: "घटना ठिकाण",
+  admin_event_desc: "वर्णन",
+  admin_booking_updated: "बुकिंग अपडेट झाली!",
 };
 
 const kn: TranslationKeys = {
@@ -755,6 +990,63 @@ const kn: TranslationKeys = {
   toast_valid_weight: "ದಯವಿಟ್ಟು ಮಾನ್ಯ ತೂಕವನ್ನು ನಮೂದಿಸಿ.",
   toast_fill_required: "ದಯವಿಟ್ಟು ಎಲ್ಲಾ ಅಗತ್ಯ ಕ್ಷೇತ್ರಗಳನ್ನು ಭರ್ತಿ ಮಾಡಿ.",
   toast_message_sent: "ಸಂದೇಶ ಕಳುಹಿಸಲಾಗಿದೆ! ನಾವು 24 ಗಂಟೆಗಳಲ್ಲಿ ನಿಮ್ಮನ್ನು ಸಂಪರ್ಕಿಸುತ್ತೇವೆ.",
+
+  nav_tracking: "ಟ್ರ್ಯಾಕಿಂಗ್",
+  auth_login: "ಲಾಗಿನ್",
+  auth_signup: "ಸೈನ್ ಅಪ್",
+  auth_subtitle: "ಟ್ರಕ್‌ಗಳು ಮತ್ತು ಬುಕಿಂಗ್‌ಗಳನ್ನು ನಿರ್ವಹಿಸಲು ನಿಮ್ಮ ಅಡ್ಮಿನ್ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ ಅನ್ನು ಪ್ರವೇಶಿಸಿ.",
+  auth_password: "ಪಾಸ್‌ವರ್ಡ್",
+  auth_loading: "ಲೋಡ್ ಆಗುತ್ತಿದೆ...",
+  auth_login_success: "ಯಶಸ್ವಿಯಾಗಿ ಲಾಗಿನ್ ಆಗಿದೆ!",
+  auth_signup_success: "ಖಾತೆ ರಚಿಸಲಾಗಿದೆ! ಪರಿಶೀಲನೆಗಾಗಿ ನಿಮ್ಮ ಇಮೇಲ್ ತಪಾಸಿಸಿ.",
+  auth_no_account: "ಖಾತೆ ಇಲ್ಲವೇ? ಸೈನ್ ಅಪ್ ಮಾಡಿ",
+  auth_have_account: "ಈಗಾಗಲೇ ಖಾತೆ ಇದೆಯೇ? ಲಾಗಿನ್ ಮಾಡಿ",
+  tracking_title: "ನಿಮ್ಮ ಸಾಗಣೆಯನ್ನು ಟ್ರ್ಯಾಕ್ ಮಾಡಿ",
+  tracking_subtitle: "ನೈಜ-ಸಮಯ ಸಾಗಣೆ ಸ್ಥಿತಿ ಮತ್ತು ಸ್ಥಳವನ್ನು ನೋಡಲು ನಿಮ್ಮ ಟ್ರ್ಯಾಕಿಂಗ್ ID ನಮೂದಿಸಿ.",
+  tracking_enter_id: "ಟ್ರ್ಯಾಕಿಂಗ್ ID ನಮೂದಿಸಿ",
+  tracking_track: "ಟ್ರ್ಯಾಕ್ ಮಾಡಿ",
+  tracking_not_found: "ಈ ಟ್ರ್ಯಾಕಿಂಗ್ ID ಯೊಂದಿಗೆ ಯಾವುದೇ ಸಾಗಣೆ ಕಂಡುಬಂದಿಲ್ಲ.",
+  tracking_shipment_details: "ಸಾಗಣೆ ವಿವರಗಳು",
+  tracking_id_label: "ಟ್ರ್ಯಾಕಿಂಗ್ ID",
+  tracking_status: "ಸ್ಥಿತಿ",
+  tracking_timeline: "ಸ್ಥಿತಿ ಟೈಮ್‌ಲೈನ್",
+  tracking_live_location: "ಲೈವ್ ಸ್ಥಳ",
+  tracking_map_unavailable: "ಸ್ಥಳ ಡೇಟಾ ಇನ್ನೂ ಲಭ್ಯವಿಲ್ಲ.",
+  admin_panel: "ಅಡ್ಮಿನ್ ಪ್ಯಾನೆಲ್",
+  admin_dashboard: "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
+  admin_overview: "ಅವಲೋಕನ",
+  admin_trucks: "ಟ್ರಕ್‌ಗಳು",
+  admin_bookings: "ಬುಕಿಂಗ್‌ಗಳು",
+  admin_logout: "ಲಾಗ್‌ಔಟ್",
+  admin_no_access: "ನಿಮಗೆ ಅಡ್ಮಿನ್ ಪ್ರವೇಶ ಇಲ್ಲ.",
+  admin_logged_out: "ಯಶಸ್ವಿಯಾಗಿ ಲಾಗ್‌ಔಟ್ ಆಗಿದೆ.",
+  admin_total_trucks: "ಒಟ್ಟು ಟ್ರಕ್‌ಗಳು",
+  admin_total_bookings: "ಒಟ್ಟು ಬುಕಿಂಗ್‌ಗಳು",
+  admin_delivered: "ವಿತರಿಸಲಾಗಿದೆ",
+  admin_pending: "ಬಾಕಿ ಇದೆ",
+  admin_recent_bookings: "ಇತ್ತೀಚಿನ ಬುಕಿಂಗ್‌ಗಳು",
+  admin_no_bookings: "ಇನ್ನೂ ಯಾವುದೇ ಬುಕಿಂಗ್‌ಗಳಿಲ್ಲ.",
+  admin_manage_trucks: "ಟ್ರಕ್‌ಗಳನ್ನು ನಿರ್ವಹಿಸಿ",
+  admin_add_truck: "ಟ್ರಕ್ ಸೇರಿಸಿ",
+  admin_edit_truck: "ಟ್ರಕ್ ಸಂಪಾದಿಸಿ",
+  admin_truck_name: "ಟ್ರಕ್ ಹೆಸರು",
+  admin_status: "ಸ್ಥಿತಿ",
+  admin_price_km: "ಬೆಲೆ/km (₹)",
+  admin_location: "ಸ್ಥಳ",
+  admin_actions: "ಕ್ರಿಯೆಗಳು",
+  admin_save_changes: "ಬದಲಾವಣೆಗಳನ್ನು ಉಳಿಸಿ",
+  admin_truck_updated: "ಟ್ರಕ್ ಯಶಸ್ವಿಯಾಗಿ ಅಪ್‌ಡೇಟ್ ಆಗಿದೆ!",
+  admin_truck_added: "ಟ್ರಕ್ ಯಶಸ್ವಿಯಾಗಿ ಸೇರಿಸಲಾಗಿದೆ!",
+  admin_truck_deleted: "ಟ್ರಕ್ ಅಳಿಸಲಾಗಿದೆ.",
+  admin_confirm_delete: "ಇದನ್ನು ನಿಜವಾಗಿಯೂ ಅಳಿಸಬೇಕೇ?",
+  admin_maintenance: "ನಿರ್ವಹಣೆ",
+  admin_manage_bookings: "ಬುಕಿಂಗ್‌ಗಳನ್ನು ನಿರ್ವಹಿಸಿ",
+  admin_all_status: "ಎಲ್ಲಾ ಸ್ಥಿತಿ",
+  admin_update_status: "ಬುಕಿಂಗ್ ಸ್ಥಿತಿ ಅಪ್‌ಡೇಟ್ ಮಾಡಿ",
+  admin_new_status: "ಹೊಸ ಸ್ಥಿತಿ",
+  admin_event_location: "ಘಟನೆ ಸ್ಥಳ",
+  admin_event_desc: "ವಿವರಣೆ",
+  admin_booking_updated: "ಬುಕಿಂಗ್ ಅಪ್‌ಡೇಟ್ ಆಗಿದೆ!",
 };
 
 export const translations: Record<Language, TranslationKeys> = { en, hi, mr, kn };

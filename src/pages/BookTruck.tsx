@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import { Truck, Calculator, ArrowRight, IndianRupee } from "lucide-react";
 import { toast } from "sonner";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { supabase } from "@/integrations/supabase/client";
 
 const truckTypes = [
   { value: "mini", label: "Mini Truck (1-2 Tons)", rate: 15 },
@@ -22,7 +23,10 @@ const BookTruck = () => {
   const [truckType, setTruckType] = useState("");
   const [weight, setWeight] = useState("");
   const [date, setDate] = useState("");
+  const [customerName, setCustomerName] = useState("");
+  const [customerPhone, setCustomerPhone] = useState("");
   const [estimatedCost, setEstimatedCost] = useState<number | null>(null);
+  const [submitting, setSubmitting] = useState(false);
   const { t } = useLanguage();
 
   const calculateRate = () => {
@@ -42,13 +46,34 @@ const BookTruck = () => {
     setEstimatedCost(cost);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!pickup || !drop || !truckType || !weight || !date) {
+    if (!pickup || !drop || !truckType || !weight || !date || !customerName || !customerPhone) {
       toast.error(t("toast_fill_fields"));
       return;
     }
-    toast.success(t("toast_booking_success"));
+    setSubmitting(true);
+    try {
+      const { data, error } = await supabase.from("bookings").insert({
+        customer_name: customerName,
+        customer_phone: customerPhone,
+        pickup_location: pickup,
+        delivery_location: drop,
+        truck_type: truckType,
+        weight: weight,
+        pickup_date: date,
+        status: "booked",
+      }).select("tracking_id").single();
+
+      if (error) throw error;
+      toast.success(`${t("toast_booking_success")} Tracking ID: ${data.tracking_id}`);
+      setPickup(""); setDrop(""); setTruckType(""); setWeight(""); setDate("");
+      setCustomerName(""); setCustomerPhone(""); setEstimatedCost(null);
+    } catch (error: any) {
+      toast.error(error.message);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -83,6 +108,17 @@ const BookTruck = () => {
 
               <div className="grid md:grid-cols-2 gap-5">
                 <div className="space-y-2">
+                  <Label htmlFor="customerName">{t("full_name")} *</Label>
+                  <Input id="customerName" placeholder={t("full_name")} value={customerName} onChange={(e) => setCustomerName(e.target.value)} required />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="customerPhone">{t("phone")} *</Label>
+                  <Input id="customerPhone" type="tel" placeholder="+91 98765 43210" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} required />
+                </div>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-5 mt-5">
+                <div className="space-y-2">
                   <Label htmlFor="pickup">{t("pickup_location")}</Label>
                   <Input id="pickup" placeholder="e.g., Hyderabad" value={pickup} onChange={(e) => setPickup(e.target.value)} />
                 </div>
@@ -115,8 +151,8 @@ const BookTruck = () => {
                 <Button type="button" variant="outline" onClick={calculateRate}>
                   <Calculator className="w-4 h-4" /> {t("calculate_rate")}
                 </Button>
-                <Button type="submit" variant="blue">
-                  {t("submit_booking")} <ArrowRight className="w-4 h-4" />
+                <Button type="submit" variant="blue" disabled={submitting}>
+                  {submitting ? t("auth_loading") : t("submit_booking")} <ArrowRight className="w-4 h-4" />
                 </Button>
               </div>
             </motion.form>
