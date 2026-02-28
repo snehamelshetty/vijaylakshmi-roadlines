@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -6,29 +6,28 @@ import { motion } from "framer-motion";
 import { Truck, MapPin, Filter } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/i18n/LanguageContext";
-
-const trucksData = [
-  { id: 1, type: "Mini Truck", capacity: "1-2 Tons", location: "Hyderabad", available: true, image: "🚛" },
-  { id: 2, type: "14ft Closed", capacity: "3-5 Tons", location: "Mumbai", available: true, image: "🚚" },
-  { id: 3, type: "20ft Container", capacity: "7-10 Tons", location: "Hyderabad", available: false, image: "🚛" },
-  { id: 4, type: "Trailer", capacity: "15-25 Tons", location: "Chennai", available: true, image: "🚛" },
-  { id: 5, type: "Mini Truck", capacity: "1-2 Tons", location: "Bangalore", available: true, image: "🚚" },
-  { id: 6, type: "20ft Container", capacity: "7-10 Tons", location: "Delhi", available: true, image: "🚛" },
-  { id: 7, type: "14ft Closed", capacity: "3-5 Tons", location: "Pune", available: true, image: "🚚" },
-  { id: 8, type: "Trailer", capacity: "15-25 Tons", location: "Hyderabad", available: false, image: "🚛" },
-];
+import { supabase } from "@/integrations/supabase/client";
 
 const TrucksAvailable = () => {
+  const [trucks, setTrucks] = useState<any[]>([]);
   const [locationFilter, setLocationFilter] = useState("all");
   const [typeFilter, setTypeFilter] = useState("all");
   const { t } = useLanguage();
 
-  const locations = [...new Set(trucksData.map((tr) => tr.location))];
-  const types = [...new Set(trucksData.map((tr) => tr.type))];
+  useEffect(() => {
+    const fetchTrucks = async () => {
+      const { data } = await supabase.from("trucks").select("*").order("created_at", { ascending: false });
+      setTrucks(data || []);
+    };
+    fetchTrucks();
+  }, []);
 
-  const filtered = trucksData.filter((tr) => {
+  const locations = [...new Set(trucks.map((tr) => tr.location))];
+  const types = [...new Set(trucks.map((tr) => tr.truck_type))];
+
+  const filtered = trucks.filter((tr) => {
     if (locationFilter !== "all" && tr.location !== locationFilter) return false;
-    if (typeFilter !== "all" && tr.type !== typeFilter) return false;
+    if (typeFilter !== "all" && tr.truck_type !== typeFilter) return false;
     return true;
   });
 
@@ -82,8 +81,9 @@ const TrucksAvailable = () => {
               transition={{ delay: i * 0.05 }}
               className="bg-card rounded-xl p-6 card-shadow border border-border"
             >
-              <div className="text-5xl text-center mb-4">{truck.image}</div>
-              <h3 className="font-semibold text-foreground text-center mb-1">{truck.type}</h3>
+              <div className="text-5xl text-center mb-4">🚛</div>
+              <h3 className="font-semibold text-foreground text-center mb-1">{truck.name}</h3>
+              <div className="text-xs text-center text-muted-foreground mb-1">{truck.truck_type}</div>
               <div className="flex items-center justify-center gap-1 text-sm text-muted-foreground mb-2">
                 <MapPin className="w-3.5 h-3.5" /> {truck.location}
               </div>
@@ -92,14 +92,16 @@ const TrucksAvailable = () => {
               </div>
               <div className="text-center mb-4">
                 <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${
-                  truck.available
+                  truck.status === "available"
                     ? "bg-[hsl(142,70%,90%)] text-[hsl(142,70%,30%)]"
+                    : truck.status === "booked"
+                    ? "bg-secondary/10 text-secondary"
                     : "bg-destructive/10 text-destructive"
                 }`}>
-                  {truck.available ? t("available") : t("booked")}
+                  {truck.status === "available" ? t("available") : truck.status === "booked" ? t("booked") : truck.status}
                 </span>
               </div>
-              {truck.available && (
+              {truck.status === "available" && (
                 <Button variant="blue" size="sm" className="w-full" asChild>
                   <Link to="/book">{t("nav_book_now")}</Link>
                 </Button>

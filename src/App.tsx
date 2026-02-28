@@ -10,6 +10,12 @@ import Services from "./pages/Services";
 import BookTruck from "./pages/BookTruck";
 import TrucksAvailable from "./pages/TrucksAvailable";
 import Contact from "./pages/Contact";
+import Tracking from "./pages/Tracking";
+import Auth from "./pages/Auth";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminOverview from "./pages/admin/AdminOverview";
+import AdminTrucks from "./pages/admin/AdminTrucks";
+import AdminBookings from "./pages/admin/AdminBookings";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +34,13 @@ const App = () => (
             <Route path="/book" element={<BookTruck />} />
             <Route path="/trucks" element={<TrucksAvailable />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/tracking" element={<Tracking />} />
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/admin" element={<AdminDashboard />}>
+              <Route index element={<AdminOverview />} />
+              <Route path="trucks" element={<AdminTrucks />} />
+              <Route path="bookings" element={<AdminBookings />} />
+            </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
