@@ -17,6 +17,7 @@ type TranslationKeys = {
   nav_tracking: string;
   nav_contact: string;
   nav_book_now: string;
+  nav_dashboard: string;
 
   // Home
   hero_badge: string;
@@ -225,6 +226,17 @@ type TranslationKeys = {
   admin_event_location: string;
   admin_event_desc: string;
   admin_booking_updated: string;
+
+  // Customer Dashboard
+  dashboard_title: string;
+  dashboard_bookings: string;
+  dashboard_tracking: string;
+  dashboard_invoices: string;
+  dashboard_no_bookings: string;
+  dashboard_invoice: string;
+  dashboard_download_invoice: string;
+  dashboard_back_to_bookings: string;
+  dashboard_select_booking: string;
 };
 
 const en: TranslationKeys = {
@@ -432,6 +444,16 @@ const en: TranslationKeys = {
   admin_event_location: "Event Location",
   admin_event_desc: "Description",
   admin_booking_updated: "Booking updated!",
+  nav_dashboard: "My Dashboard",
+  dashboard_title: "My Dashboard",
+  dashboard_bookings: "Bookings",
+  dashboard_tracking: "Tracking",
+  dashboard_invoices: "Invoices",
+  dashboard_no_bookings: "No bookings yet. Book a truck to get started!",
+  dashboard_invoice: "Invoice",
+  dashboard_download_invoice: "Download Invoice",
+  dashboard_back_to_bookings: "Back to Bookings",
+  dashboard_select_booking: "Select a booking from the Bookings tab to track it.",
 };
 
 const hi: TranslationKeys = {
@@ -637,6 +659,16 @@ const hi: TranslationKeys = {
   admin_event_location: "घटना स्थान",
   admin_event_desc: "विवरण",
   admin_booking_updated: "बुकिंग अपडेट हो गई!",
+  nav_dashboard: "मेरा डैशबोर्ड",
+  dashboard_title: "मेरा डैशबोर्ड",
+  dashboard_bookings: "बुकिंग",
+  dashboard_tracking: "ट्रैकिंग",
+  dashboard_invoices: "चालान",
+  dashboard_no_bookings: "अभी कोई बुकिंग नहीं। शुरू करने के लिए ट्रक बुक करें!",
+  dashboard_invoice: "चालान",
+  dashboard_download_invoice: "चालान डाउनलोड करें",
+  dashboard_back_to_bookings: "बुकिंग पर वापस",
+  dashboard_select_booking: "ट्रैक करने के लिए बुकिंग टैब से एक बुकिंग चुनें।",
 };
 
 const mr: TranslationKeys = {
@@ -842,6 +874,16 @@ const mr: TranslationKeys = {
   admin_event_location: "घटना ठिकाण",
   admin_event_desc: "वर्णन",
   admin_booking_updated: "बुकिंग अपडेट झाली!",
+  nav_dashboard: "माझा डॅशबोर्ड",
+  dashboard_title: "माझा डॅशबोर्ड",
+  dashboard_bookings: "बुकिंग",
+  dashboard_tracking: "ट्रॅकिंग",
+  dashboard_invoices: "चलन",
+  dashboard_no_bookings: "अजून कोणतीही बुकिंग नाही. सुरुवात करण्यासाठी ट्रक बुक करा!",
+  dashboard_invoice: "चलन",
+  dashboard_download_invoice: "चलन डाउनलोड करा",
+  dashboard_back_to_bookings: "बुकिंगवर परत",
+  dashboard_select_booking: "ट्रॅक करण्यासाठी बुकिंग टॅबमधून एक बुकिंग निवडा.",
 };
 
 const kn: TranslationKeys = {
@@ -1047,6 +1089,16 @@ const kn: TranslationKeys = {
   admin_event_location: "ಘಟನೆ ಸ್ಥಳ",
   admin_event_desc: "ವಿವರಣೆ",
   admin_booking_updated: "ಬುಕಿಂಗ್ ಅಪ್‌ಡೇಟ್ ಆಗಿದೆ!",
+  nav_dashboard: "ನನ್ನ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
+  dashboard_title: "ನನ್ನ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
+  dashboard_bookings: "ಬುಕಿಂಗ್‌ಗಳು",
+  dashboard_tracking: "ಟ್ರ್ಯಾಕಿಂಗ್",
+  dashboard_invoices: "ಇನ್‌ವಾಯ್ಸ್‌ಗಳು",
+  dashboard_no_bookings: "ಇನ್ನೂ ಯಾವುದೇ ಬುಕಿಂಗ್‌ಗಳಿಲ್ಲ. ಪ್ರಾರಂಭಿಸಲು ಟ್ರಕ್ ಬುಕ್ ಮಾಡಿ!",
+  dashboard_invoice: "ಇನ್‌ವಾಯ್ಸ್",
+  dashboard_download_invoice: "ಇನ್‌ವಾಯ್ಸ್ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ",
+  dashboard_back_to_bookings: "ಬುಕಿಂಗ್‌ಗಳಿಗೆ ಹಿಂತಿರುಗಿ",
+  dashboard_select_booking: "ಟ್ರ್ಯಾಕ್ ಮಾಡಲು ಬುಕಿಂಗ್‌ಗಳ ಟ್ಯಾಬ್‌ನಿಂದ ಒಂದು ಬುಕಿಂಗ್ ಆಯ್ಕೆಮಾಡಿ.",
 };
 
 export const translations: Record<Language, TranslationKeys> = { en, hi, mr, kn };

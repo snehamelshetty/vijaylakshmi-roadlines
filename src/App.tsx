@@ -12,6 +12,7 @@ import TrucksAvailable from "./pages/TrucksAvailable";
 import Contact from "./pages/Contact";
 import Tracking from "./pages/Tracking";
 import Auth from "./pages/Auth";
+import CustomerDashboard from "./pages/CustomerDashboard";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminOverview from "./pages/admin/AdminOverview";
 import AdminTrucks from "./pages/admin/AdminTrucks";
@@ -36,6 +37,7 @@ const App = () => (
             <Route path="/contact" element={<Contact />} />
             <Route path="/tracking" element={<Tracking />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/dashboard" element={<CustomerDashboard />} />
             <Route path="/admin" element={<AdminDashboard />}>
               <Route index element={<AdminOverview />} />
               <Route path="trucks" element={<AdminTrucks />} />
