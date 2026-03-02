@@ -27,7 +27,15 @@ const BookTruck = () => {
   const [customerPhone, setCustomerPhone] = useState("");
   const [estimatedCost, setEstimatedCost] = useState<number | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
   const { t } = useLanguage();
+
+  // Get current user if logged in
+  useState(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) setUserId(session.user.id);
+    });
+  });
 
   const calculateRate = () => {
     if (!truckType || !weight) {
@@ -54,7 +62,7 @@ const BookTruck = () => {
     }
     setSubmitting(true);
     try {
-      const { data, error } = await supabase.from("bookings").insert({
+      const insertData: any = {
         customer_name: customerName,
         customer_phone: customerPhone,
         pickup_location: pickup,
@@ -63,7 +71,10 @@ const BookTruck = () => {
         weight: weight,
         pickup_date: date,
         status: "booked",
-      }).select("tracking_id").single();
+      };
+      if (userId) insertData.user_id = userId;
+
+      const { data, error } = await supabase.from("bookings").insert(insertData).select("tracking_id").single();
 
       if (error) throw error;
       toast.success(`${t("toast_booking_success")} Tracking ID: ${data.tracking_id}`);

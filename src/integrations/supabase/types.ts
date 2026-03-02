@@ -31,6 +31,7 @@ export type Database = {
           truck_id: string | null
           truck_type: string
           updated_at: string
+          user_id: string | null
           weight: string | null
         }
         Insert: {
@@ -49,6 +50,7 @@ export type Database = {
           truck_id?: string | null
           truck_type: string
           updated_at?: string
+          user_id?: string | null
           weight?: string | null
         }
         Update: {
@@ -67,6 +69,7 @@ export type Database = {
           truck_id?: string | null
           truck_type?: string
           updated_at?: string
+          user_id?: string | null
           weight?: string | null
         }
         Relationships: [
