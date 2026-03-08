@@ -35,20 +35,19 @@ const ScrollingTruck = () => {
             src={truckImage}
             alt="Delivery truck"
             className="w-20 h-auto drop-shadow-lg"
-            style={{ transform: "scaleX(-1)" }}
           />
           {/* Exhaust smoke */}
           {[...Array(4)].map((_, i) => (
             <motion.div
               key={i}
-              className="absolute top-[60%] left-[85%] rounded-full"
+              className="absolute top-[60%] right-[85%] rounded-full"
               style={{
                 width: `${6 + i * 2}px`,
                 height: `${6 + i * 2}px`,
                 background: "hsl(var(--muted-foreground) / 0.15)",
               }}
               animate={{
-                x: [0, 30 + i * 10],
+                x: [0, -(30 + i * 10)],
                 y: [0, -10 - i * 5],
                 opacity: [0.4, 0],
                 scale: [1, 2.5],
