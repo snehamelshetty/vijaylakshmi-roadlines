@@ -40,7 +40,7 @@ const ScrollingTruck = () => {
           {[...Array(4)].map((_, i) => (
             <motion.div
               key={i}
-              className="absolute top-[60%] left-[85%] rounded-full"
+              className="absolute top-[60%] right-[85%] rounded-full"
               style={{
                 width: `${6 + i * 2}px`,
                 height: `${6 + i * 2}px`,
