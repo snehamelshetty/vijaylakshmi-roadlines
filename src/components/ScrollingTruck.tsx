@@ -16,8 +16,8 @@ const ScrollingTruck = () => {
 
   return (
     <motion.div
-      className="fixed z-40 pointer-events-none"
-      style={{ x, left: 0, bottom: "25vh" }}
+      className="fixed bottom-4 z-40 pointer-events-none"
+      style={{ x, left: 0 }}
     >
       <div className="relative">
         {/* Road surface */}
