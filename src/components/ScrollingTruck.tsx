@@ -16,8 +16,8 @@ const ScrollingTruck = () => {
 
   return (
     <motion.div
-      className="fixed z-40 pointer-events-none"
-      style={{ x, left: 0, bottom: "25vh" }}
+      className="fixed bottom-4 z-40 pointer-events-none"
+      style={{ x, left: 0 }}
     >
       <div className="relative">
         {/* Road surface */}
@@ -34,7 +34,7 @@ const ScrollingTruck = () => {
           <img
             src={truckImage}
             alt="Delivery truck"
-            className="w-20 h-auto drop-shadow-lg"
+            className="w-32 h-auto drop-shadow-lg"
           />
           {/* Exhaust smoke */}
           {[...Array(4)].map((_, i) => (
