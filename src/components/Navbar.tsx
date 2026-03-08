@@ -78,6 +78,9 @@ const Navbar = () => {
               </div>
             )}
           </div>
+          <Button variant="outline" size="sm" asChild>
+            <Link to="/auth">{t("auth_login")}</Link>
+          </Button>
           <Button variant="blue" size="sm" asChild>
             <Link to="/book">{t("nav_book_now")}</Link>
           </Button>
