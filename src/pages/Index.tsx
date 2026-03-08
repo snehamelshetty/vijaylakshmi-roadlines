@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/Layout";
+import ParallaxSection from "@/components/ParallaxSection";
 import heroImage from "@/assets/hero-trucks.jpg";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 import {
   Truck, Package, Clock, Shield, MapPin, Star, ArrowRight,
   Warehouse, Zap, Users
@@ -11,6 +13,13 @@ import { useLanguage } from "@/i18n/LanguageContext";
 
 const Index = () => {
   const { t } = useLanguage();
+  const heroRef = useRef<HTMLElement>(null);
+  const { scrollYProgress: heroScroll } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+  const heroY = useTransform(heroScroll, [0, 1], [0, 150]);
+  const heroOpacity = useTransform(heroScroll, [0, 0.8], [1, 0]);
 
   const stats = [
     { icon: Truck, value: "500+", label: t("stat_trucks") },
@@ -34,13 +43,13 @@ const Index = () => {
 
   return (
     <Layout>
-      {/* Hero */}
-      <section className="relative min-h-[90vh] flex items-center">
-        <div className="absolute inset-0">
-          <img src={heroImage} alt="Fleet of trucks on highway" className="w-full h-full object-cover" />
+      {/* Hero with Parallax */}
+      <section ref={heroRef} className="relative min-h-[90vh] flex items-center overflow-hidden">
+        <motion.div className="absolute inset-0" style={{ y: heroY }}>
+          <img src={heroImage} alt="Fleet of trucks on highway" className="w-full h-full object-cover scale-110" />
           <div className="absolute inset-0 hero-overlay" />
-        </div>
-        <div className="relative container mx-auto px-4 py-20">
+        </motion.div>
+        <motion.div className="relative container mx-auto px-4 py-20" style={{ opacity: heroOpacity }}>
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
@@ -68,7 +77,7 @@ const Index = () => {
               </Button>
             </div>
           </motion.div>
-        </div>
+        </motion.div>
       </section>
 
       {/* Stats */}
@@ -77,9 +86,9 @@ const Index = () => {
           {stats.map((stat, i) => (
             <motion.div
               key={stat.label}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
+              transition={{ delay: i * 0.1, duration: 0.5 }}
               viewport={{ once: true }}
               className="bg-card rounded-xl p-6 text-center card-shadow"
             >
@@ -91,70 +100,74 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Services Preview */}
-      <section className="section-padding container mx-auto mt-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">{t("home_services_title")}</h2>
-          <p className="text-muted-foreground max-w-xl mx-auto">
-            {t("home_services_desc")}
-          </p>
-        </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {services.map((service, i) => (
-            <motion.div
-              key={service.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
-              viewport={{ once: true }}
-              className="bg-card rounded-xl p-6 card-shadow group hover:-translate-y-1 transition-transform duration-300"
-            >
-              <div className="w-12 h-12 rounded-lg gradient-primary flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                <service.icon className="w-6 h-6 text-primary-foreground" />
-              </div>
-              <h3 className="font-semibold text-foreground mb-2">{service.title}</h3>
-              <p className="text-sm text-muted-foreground mb-4">{service.desc}</p>
-              <Link to="/services" className="text-secondary text-sm font-medium inline-flex items-center gap-1 hover:gap-2 transition-all">
-                {t("learn_more")} <ArrowRight className="w-4 h-4" />
-              </Link>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* Why Choose Us */}
-      <section className="section-padding gradient-secondary">
-        <div className="container mx-auto">
+      {/* Services Preview with Parallax */}
+      <ParallaxSection speed={0.15} className="mt-8">
+        <section className="section-padding container mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-secondary-foreground mb-3">{t("why_choose_title")}</h2>
-            <p className="text-secondary-foreground/80 max-w-xl mx-auto">
-              {t("why_choose_desc")}
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">{t("home_services_title")}</h2>
+            <p className="text-muted-foreground max-w-xl mx-auto">
+              {t("home_services_desc")}
             </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { icon: Shield, title: t("safe_secure"), desc: t("safe_secure_desc") },
-              { icon: Clock, title: t("on_time"), desc: t("on_time_desc") },
-              { icon: Star, title: t("best_rates"), desc: t("best_rates_desc") },
-            ].map((item, i) => (
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {services.map((service, i) => (
               <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 20 }}
+                key={service.title}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.15 }}
+                transition={{ delay: i * 0.1, duration: 0.5 }}
                 viewport={{ once: true }}
-                className="text-center"
+                className="bg-card rounded-xl p-6 card-shadow group hover:-translate-y-1 transition-transform duration-300"
               >
-                <div className="w-16 h-16 rounded-full bg-secondary-foreground/20 flex items-center justify-center mx-auto mb-4">
-                  <item.icon className="w-8 h-8 text-secondary-foreground" />
+                <div className="w-12 h-12 rounded-lg gradient-primary flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <service.icon className="w-6 h-6 text-primary-foreground" />
                 </div>
-                <h3 className="font-semibold text-secondary-foreground text-lg mb-2">{item.title}</h3>
-                <p className="text-secondary-foreground/80 text-sm">{item.desc}</p>
+                <h3 className="font-semibold text-foreground mb-2">{service.title}</h3>
+                <p className="text-sm text-muted-foreground mb-4">{service.desc}</p>
+                <Link to="/services" className="text-secondary text-sm font-medium inline-flex items-center gap-1 hover:gap-2 transition-all">
+                  {t("learn_more")} <ArrowRight className="w-4 h-4" />
+                </Link>
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
+      </ParallaxSection>
+
+      {/* Why Choose Us with Parallax */}
+      <ParallaxSection speed={0.1}>
+        <section className="section-padding gradient-secondary">
+          <div className="container mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-secondary-foreground mb-3">{t("why_choose_title")}</h2>
+              <p className="text-secondary-foreground/80 max-w-xl mx-auto">
+                {t("why_choose_desc")}
+              </p>
+            </div>
+            <div className="grid md:grid-cols-3 gap-8">
+              {[
+                { icon: Shield, title: t("safe_secure"), desc: t("safe_secure_desc") },
+                { icon: Clock, title: t("on_time"), desc: t("on_time_desc") },
+                { icon: Star, title: t("best_rates"), desc: t("best_rates_desc") },
+              ].map((item, i) => (
+                <motion.div
+                  key={item.title}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.15, duration: 0.5 }}
+                  viewport={{ once: true }}
+                  className="text-center"
+                >
+                  <div className="w-16 h-16 rounded-full bg-secondary-foreground/20 flex items-center justify-center mx-auto mb-4">
+                    <item.icon className="w-8 h-8 text-secondary-foreground" />
+                  </div>
+                  <h3 className="font-semibold text-secondary-foreground text-lg mb-2">{item.title}</h3>
+                  <p className="text-secondary-foreground/80 text-sm">{item.desc}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+      </ParallaxSection>
 
       {/* Testimonials */}
       <section className="section-padding container mx-auto">
@@ -165,9 +178,9 @@ const Index = () => {
           {testimonials.map((tl, i) => (
             <motion.div
               key={tl.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ delay: i * 0.1, duration: 0.4 }}
               viewport={{ once: true }}
               className="bg-card rounded-xl p-6 card-shadow"
             >
@@ -189,17 +202,23 @@ const Index = () => {
       {/* CTA */}
       <section className="section-padding gradient-primary">
         <div className="container mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
-            {t("ready_to_ship")}
-          </h2>
-          <p className="text-primary-foreground/80 mb-8 max-w-md mx-auto">
-            {t("ready_to_ship_desc")}
-          </p>
-          <Button variant="blue" size="lg" asChild>
-            <Link to="/book">
-              {t("book_truck_now")} <ArrowRight className="w-5 h-5" />
-            </Link>
-          </Button>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
+              {t("ready_to_ship")}
+            </h2>
+            <p className="text-primary-foreground/80 mb-8 max-w-md mx-auto">
+              {t("ready_to_ship_desc")}
+            </p>
+            <Button variant="blue" size="lg" asChild>
+              <Link to="/book">
+                {t("book_truck_now")} <ArrowRight className="w-5 h-5" />
+              </Link>
+            </Button>
+          </motion.div>
         </div>
       </section>
     </Layout>
