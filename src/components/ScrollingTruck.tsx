@@ -47,7 +47,7 @@ const ScrollingTruck = () => {
                 background: "hsl(var(--muted-foreground) / 0.15)",
               }}
               animate={{
-                x: [0, 30 + i * 10],
+                x: [0, -(30 + i * 10)],
                 y: [0, -10 - i * 5],
                 opacity: [0.4, 0],
                 scale: [1, 2.5],
