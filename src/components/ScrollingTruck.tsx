@@ -34,7 +34,7 @@ const ScrollingTruck = () => {
           <img
             src={truckImage}
             alt="Delivery truck"
-            className="w-20 h-auto drop-shadow-lg"
+            className="w-32 h-auto drop-shadow-lg"
           />
           {/* Exhaust smoke */}
           {[...Array(4)].map((_, i) => (
