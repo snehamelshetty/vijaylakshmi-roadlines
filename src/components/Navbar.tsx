@@ -78,6 +78,9 @@ const Navbar = () => {
               </div>
             )}
           </div>
+          <Button variant="outline" size="sm" asChild>
+            <Link to="/auth">{t("auth_login")}</Link>
+          </Button>
           <Button variant="blue" size="sm" asChild>
             <Link to="/book">{t("nav_book_now")}</Link>
           </Button>
@@ -128,7 +131,10 @@ const Navbar = () => {
                 </button>
               ))}
             </div>
-            <Button variant="blue" size="sm" asChild className="mt-2">
+            <Button variant="outline" size="sm" asChild className="mt-2">
+              <Link to="/auth" onClick={() => setMobileOpen(false)}>{t("auth_login")}</Link>
+            </Button>
+            <Button variant="blue" size="sm" asChild className="mt-1">
               <Link to="/book" onClick={() => setMobileOpen(false)}>{t("nav_book_now")}</Link>
             </Button>
           </div>
