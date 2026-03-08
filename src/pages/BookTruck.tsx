@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Layout from "@/components/Layout";
+import ParallaxSection from "@/components/ParallaxSection";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -30,7 +31,6 @@ const BookTruck = () => {
   const [userId, setUserId] = useState<string | null>(null);
   const { t } = useLanguage();
 
-  // Get current user if logged in
   useState(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session) setUserId(session.user.id);
@@ -50,8 +50,7 @@ const BookTruck = () => {
       return;
     }
     const baseCost = w * truck.rate * 100;
-    const cost = Math.round(baseCost + 2000);
-    setEstimatedCost(cost);
+    setEstimatedCost(Math.round(baseCost + 2000));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -68,14 +67,13 @@ const BookTruck = () => {
         pickup_location: pickup,
         delivery_location: drop,
         truck_type: truckType,
-        weight: weight,
+        weight,
         pickup_date: date,
         status: "booked",
       };
       if (userId) insertData.user_id = userId;
 
       const { data, error } = await supabase.from("bookings").insert(insertData).select("tracking_id").single();
-
       if (error) throw error;
       toast.success(`${t("toast_booking_success")} Tracking ID: ${data.tracking_id}`);
       setPickup(""); setDrop(""); setTruckType(""); setWeight(""); setDate("");
@@ -89,131 +87,137 @@ const BookTruck = () => {
 
   return (
     <Layout>
-      <section className="gradient-secondary section-padding">
+      <section className="gradient-secondary section-padding overflow-hidden">
         <div className="container mx-auto text-center py-12">
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 30, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.6 }}
             className="text-4xl md:text-5xl font-bold text-secondary-foreground mb-4"
           >
             {t("book_truck_title")}
           </motion.h1>
-          <p className="text-secondary-foreground/80 max-w-2xl mx-auto text-lg">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-secondary-foreground/80 max-w-2xl mx-auto text-lg"
+          >
             {t("book_truck_subtitle")}
-          </p>
+          </motion.p>
         </div>
       </section>
 
-      <section className="section-padding container mx-auto">
-        <div className="grid lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2">
-            <motion.form
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              onSubmit={handleSubmit}
-              className="bg-card rounded-xl p-8 card-shadow border border-border"
-            >
-              <h2 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
-                <Truck className="w-6 h-6 text-secondary" /> {t("booking_details")}
-              </h2>
+      <ParallaxSection speed={0.08}>
+        <section className="section-padding container mx-auto">
+          <div className="grid lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2">
+              <motion.form
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                onSubmit={handleSubmit}
+                className="bg-card rounded-xl p-8 card-shadow border border-border"
+              >
+                <h2 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
+                  <Truck className="w-6 h-6 text-secondary" /> {t("booking_details")}
+                </h2>
 
-              <div className="grid md:grid-cols-2 gap-5">
-                <div className="space-y-2">
-                  <Label htmlFor="customerName">{t("full_name")} *</Label>
-                  <Input id="customerName" placeholder={t("full_name")} value={customerName} onChange={(e) => setCustomerName(e.target.value)} required />
+                <div className="grid md:grid-cols-2 gap-5">
+                  <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }} className="space-y-2">
+                    <Label htmlFor="customerName">{t("full_name")} *</Label>
+                    <Input id="customerName" placeholder={t("full_name")} value={customerName} onChange={(e) => setCustomerName(e.target.value)} required />
+                  </motion.div>
+                  <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15 }} className="space-y-2">
+                    <Label htmlFor="customerPhone">{t("phone")} *</Label>
+                    <Input id="customerPhone" type="tel" placeholder="+91 98765 43210" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} required />
+                  </motion.div>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="customerPhone">{t("phone")} *</Label>
-                  <Input id="customerPhone" type="tel" placeholder="+91 98765 43210" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} required />
-                </div>
-              </div>
 
-              <div className="grid md:grid-cols-2 gap-5 mt-5">
-                <div className="space-y-2">
-                  <Label htmlFor="pickup">{t("pickup_location")}</Label>
-                  <Input id="pickup" placeholder="e.g., Hyderabad" value={pickup} onChange={(e) => setPickup(e.target.value)} />
+                <div className="grid md:grid-cols-2 gap-5 mt-5">
+                  {[
+                    { id: "pickup", label: t("pickup_location"), placeholder: "e.g., Hyderabad", value: pickup, onChange: setPickup },
+                    { id: "drop", label: t("drop_location"), placeholder: "e.g., Mumbai", value: drop, onChange: setDrop },
+                  ].map((field, i) => (
+                    <motion.div key={field.id} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + i * 0.05 }} className="space-y-2">
+                      <Label htmlFor={field.id}>{field.label}</Label>
+                      <Input id={field.id} placeholder={field.placeholder} value={field.value} onChange={(e) => field.onChange(e.target.value)} />
+                    </motion.div>
+                  ))}
+                  <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="space-y-2">
+                    <Label>{t("truck_type")}</Label>
+                    <Select value={truckType} onValueChange={setTruckType}>
+                      <SelectTrigger><SelectValue placeholder={t("select_truck_type")} /></SelectTrigger>
+                      <SelectContent>
+                        {truckTypes.map((tr) => (
+                          <SelectItem key={tr.value} value={tr.value}>{tr.label}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </motion.div>
+                  <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }} className="space-y-2">
+                    <Label htmlFor="weight">{t("load_weight")}</Label>
+                    <Input id="weight" type="number" placeholder="e.g., 5" value={weight} onChange={(e) => setWeight(e.target.value)} />
+                  </motion.div>
+                  <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="space-y-2">
+                    <Label htmlFor="date">{t("pickup_date")}</Label>
+                    <Input id="date" type="date" value={date} onChange={(e) => setDate(e.target.value)} />
+                  </motion.div>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="drop">{t("drop_location")}</Label>
-                  <Input id="drop" placeholder="e.g., Mumbai" value={drop} onChange={(e) => setDrop(e.target.value)} />
-                </div>
-                <div className="space-y-2">
-                  <Label>{t("truck_type")}</Label>
-                  <Select value={truckType} onValueChange={setTruckType}>
-                    <SelectTrigger><SelectValue placeholder={t("select_truck_type")} /></SelectTrigger>
-                    <SelectContent>
-                      {truckTypes.map((tr) => (
-                        <SelectItem key={tr.value} value={tr.value}>{tr.label}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="weight">{t("load_weight")}</Label>
-                  <Input id="weight" type="number" placeholder="e.g., 5" value={weight} onChange={(e) => setWeight(e.target.value)} />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="date">{t("pickup_date")}</Label>
-                  <Input id="date" type="date" value={date} onChange={(e) => setDate(e.target.value)} />
-                </div>
-              </div>
 
-              <div className="mt-6 flex flex-wrap gap-3">
-                <Button type="button" variant="outline" onClick={calculateRate}>
-                  <Calculator className="w-4 h-4" /> {t("calculate_rate")}
-                </Button>
-                <Button type="submit" variant="blue" disabled={submitting}>
-                  {submitting ? t("auth_loading") : t("submit_booking")} <ArrowRight className="w-4 h-4" />
-                </Button>
-              </div>
-            </motion.form>
-          </div>
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className="mt-6 flex flex-wrap gap-3">
+                  <Button type="button" variant="outline" onClick={calculateRate}>
+                    <Calculator className="w-4 h-4" /> {t("calculate_rate")}
+                  </Button>
+                  <Button type="submit" variant="blue" disabled={submitting}>
+                    {submitting ? t("auth_loading") : t("submit_booking")} <ArrowRight className="w-4 h-4" />
+                  </Button>
+                </motion.div>
+              </motion.form>
+            </div>
 
-          <div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="bg-card rounded-xl p-8 card-shadow border border-border sticky top-24"
-            >
-              <h3 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
-                <IndianRupee className="w-5 h-5 text-secondary" /> {t("rate_estimate")}
-              </h3>
-              {estimatedCost !== null ? (
-                <div>
-                  <div className="text-4xl font-bold text-secondary mb-2">
-                    ₹{estimatedCost.toLocaleString()}
+            <div>
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.6 }}
+                className="bg-card rounded-xl p-8 card-shadow border border-border sticky top-24"
+              >
+                <h3 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
+                  <IndianRupee className="w-5 h-5 text-secondary" /> {t("rate_estimate")}
+                </h3>
+                {estimatedCost !== null ? (
+                  <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}>
+                    <div className="text-4xl font-bold text-secondary mb-2">
+                      ₹{estimatedCost.toLocaleString()}
+                    </div>
+                    <p className="text-sm text-muted-foreground mb-4">{t("estimated_cost_note")}</p>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between text-muted-foreground">
+                        <span>{t("transport_charges")}</span>
+                        <span>₹{(estimatedCost - 2000).toLocaleString()}</span>
+                      </div>
+                      <div className="flex justify-between text-muted-foreground">
+                        <span>{t("loading_charges")}</span>
+                        <span>₹2,000</span>
+                      </div>
+                      <div className="border-t border-border pt-2 flex justify-between font-semibold text-foreground">
+                        <span>{t("total")}</span>
+                        <span>₹{estimatedCost.toLocaleString()}</span>
+                      </div>
+                    </div>
+                  </motion.div>
+                ) : (
+                  <div className="text-center py-8">
+                    <Calculator className="w-12 h-12 text-muted-foreground/30 mx-auto mb-3" />
+                    <p className="text-muted-foreground text-sm">{t("rate_placeholder")}</p>
                   </div>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    {t("estimated_cost_note")}
-                  </p>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between text-muted-foreground">
-                      <span>{t("transport_charges")}</span>
-                      <span>₹{(estimatedCost - 2000).toLocaleString()}</span>
-                    </div>
-                    <div className="flex justify-between text-muted-foreground">
-                      <span>{t("loading_charges")}</span>
-                      <span>₹2,000</span>
-                    </div>
-                    <div className="border-t border-border pt-2 flex justify-between font-semibold text-foreground">
-                      <span>{t("total")}</span>
-                      <span>₹{estimatedCost.toLocaleString()}</span>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <div className="text-center py-8">
-                  <Calculator className="w-12 h-12 text-muted-foreground/30 mx-auto mb-3" />
-                  <p className="text-muted-foreground text-sm">
-                    {t("rate_placeholder")}
-                  </p>
-                </div>
-              )}
-            </motion.div>
+                )}
+              </motion.div>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </ParallaxSection>
     </Layout>
   );
 };
