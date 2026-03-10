@@ -65,6 +65,7 @@ const BookTruck = () => {
       const insertData: any = {
         customer_name: customerName,
         customer_phone: customerPhone,
+        customer_email: customerEmail || null,
         pickup_location: pickup,
         delivery_location: drop,
         truck_type: truckType,
@@ -74,11 +75,21 @@ const BookTruck = () => {
       };
       if (userId) insertData.user_id = userId;
 
-      const { data, error } = await supabase.from("bookings").insert(insertData).select("tracking_id").single();
+      const { data, error } = await supabase.from("bookings").insert(insertData).select("tracking_id, id").single();
       if (error) throw error;
       toast.success(`${t("toast_booking_success")} Tracking ID: ${data.tracking_id}`);
+
+      // Send booking confirmation email (fire-and-forget)
+      if (customerEmail) {
+        supabase.functions.invoke("send-booking-email", {
+          body: { booking_id: data.id },
+        }).then(({ error: fnErr }) => {
+          if (fnErr) console.error("Booking email failed:", fnErr);
+        });
+      }
+
       setPickup(""); setDrop(""); setTruckType(""); setWeight(""); setDate("");
-      setCustomerName(""); setCustomerPhone(""); setEstimatedCost(null);
+      setCustomerName(""); setCustomerPhone(""); setCustomerEmail(""); setEstimatedCost(null);
     } catch (error: any) {
       toast.error(error.message);
     } finally {
