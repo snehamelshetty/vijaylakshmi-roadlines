@@ -26,6 +26,7 @@ const BookTruck = () => {
   const [date, setDate] = useState("");
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
+  const [customerEmail, setCustomerEmail] = useState("");
   const [estimatedCost, setEstimatedCost] = useState<number | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
