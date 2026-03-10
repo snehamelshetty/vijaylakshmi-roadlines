@@ -153,6 +153,7 @@ const BookTruck = () => {
                     </Label>
                     <Input id="customerEmail" type="email" placeholder="your@email.com" value={customerEmail} onChange={(e) => setCustomerEmail(e.target.value)} />
                   </motion.div>
+                </div>
 
                 <div className="grid md:grid-cols-2 gap-5 mt-5">
                   {[
