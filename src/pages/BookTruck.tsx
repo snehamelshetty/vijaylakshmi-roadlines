@@ -145,6 +145,14 @@ const BookTruck = () => {
                     <Input id="customerPhone" type="tel" placeholder="+91 98765 43210" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} required />
                   </motion.div>
                 </div>
+                <div className="grid md:grid-cols-1 gap-5 mt-5">
+                  <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.18 }} className="space-y-2">
+                    <Label htmlFor="customerEmail">
+                      <Mail className="w-4 h-4 inline mr-1" />
+                      {t("email")} (for booking updates)
+                    </Label>
+                    <Input id="customerEmail" type="email" placeholder="your@email.com" value={customerEmail} onChange={(e) => setCustomerEmail(e.target.value)} />
+                  </motion.div>
 
                 <div className="grid md:grid-cols-2 gap-5 mt-5">
                   {[
