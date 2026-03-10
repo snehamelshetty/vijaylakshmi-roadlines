@@ -32,6 +32,7 @@ const AdminBookings = () => {
   const handleUpdateStatus = async () => {
     if (!selected || !editStatus) return;
 
+    const oldStatus = selected.status;
     const { error } = await supabase.from("bookings").update({ status: editStatus }).eq("id", selected.id);
     if (error) { toast.error(error.message); return; }
 
@@ -41,6 +42,13 @@ const AdminBookings = () => {
       status: editStatus,
       location: eventLocation || null,
       description: eventDesc || `Status updated to ${editStatus.replace("_", " ")}`,
+    });
+
+    // Send email notification (fire-and-forget)
+    supabase.functions.invoke("notify-status-change", {
+      body: { booking_id: selected.id, new_status: editStatus, old_status: oldStatus },
+    }).then(({ error: fnErr }) => {
+      if (fnErr) console.error("Email notification failed:", fnErr);
     });
 
     toast.success(t("admin_booking_updated"));
