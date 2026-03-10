@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
-import { Lock, Mail, User } from "lucide-react";
+import { Lock, Mail, User, Phone } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 const Auth = () => {
@@ -15,6 +15,7 @@ const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
+  const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { t } = useLanguage();
@@ -28,7 +29,6 @@ const Auth = () => {
         const { data: signInData, error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
         toast.success(t("auth_login_success"));
-        // Check if user is admin
         const { data: roleData } = await supabase
           .from("user_roles")
           .select("role")
@@ -37,15 +37,22 @@ const Auth = () => {
           .maybeSingle();
         navigate(roleData ? "/admin" : "/dashboard");
       } else {
+        if (!phone) {
+          toast.error("Please enter your phone number");
+          setLoading(false);
+          return;
+        }
         const { error } = await supabase.auth.signUp({
           email,
           password,
           options: {
-            data: { full_name: fullName },
+            data: { full_name: fullName, phone },
             emailRedirectTo: window.location.origin,
           },
         });
         if (error) throw error;
+
+        // Update profile with phone number after signup
         toast.success(t("auth_signup_success"));
       }
     } catch (error: any) {
@@ -81,19 +88,35 @@ const Auth = () => {
         >
           <div className="space-y-5">
             {!isLogin && (
-              <div className="space-y-2">
-                <Label htmlFor="fullName">
-                  <User className="w-4 h-4 inline mr-1" />
-                  {t("full_name")}
-                </Label>
-                <Input
-                  id="fullName"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  placeholder={t("full_name")}
-                  required
-                />
-              </div>
+              <>
+                <div className="space-y-2">
+                  <Label htmlFor="fullName">
+                    <User className="w-4 h-4 inline mr-1" />
+                    {t("full_name")}
+                  </Label>
+                  <Input
+                    id="fullName"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    placeholder={t("full_name")}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="phone">
+                    <Phone className="w-4 h-4 inline mr-1" />
+                    {t("phone")}
+                  </Label>
+                  <Input
+                    id="phone"
+                    type="tel"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    placeholder="+91 98765 43210"
+                    required
+                  />
+                </div>
+              </>
             )}
             <div className="space-y-2">
               <Label htmlFor="email">
