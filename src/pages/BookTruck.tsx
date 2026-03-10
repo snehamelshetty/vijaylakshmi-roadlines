@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { motion } from "framer-motion";
-import { Truck, Calculator, ArrowRight, IndianRupee } from "lucide-react";
+import { Truck, Calculator, ArrowRight, IndianRupee, Mail } from "lucide-react";
 import { toast } from "sonner";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { supabase } from "@/integrations/supabase/client";
@@ -26,6 +26,7 @@ const BookTruck = () => {
   const [date, setDate] = useState("");
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
+  const [customerEmail, setCustomerEmail] = useState("");
   const [estimatedCost, setEstimatedCost] = useState<number | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
@@ -64,6 +65,7 @@ const BookTruck = () => {
       const insertData: any = {
         customer_name: customerName,
         customer_phone: customerPhone,
+        customer_email: customerEmail || null,
         pickup_location: pickup,
         delivery_location: drop,
         truck_type: truckType,
@@ -73,11 +75,21 @@ const BookTruck = () => {
       };
       if (userId) insertData.user_id = userId;
 
-      const { data, error } = await supabase.from("bookings").insert(insertData).select("tracking_id").single();
+      const { data, error } = await supabase.from("bookings").insert(insertData).select("tracking_id, id").single();
       if (error) throw error;
       toast.success(`${t("toast_booking_success")} Tracking ID: ${data.tracking_id}`);
+
+      // Send booking confirmation email (fire-and-forget)
+      if (customerEmail) {
+        supabase.functions.invoke("send-booking-email", {
+          body: { booking_id: data.id },
+        }).then(({ error: fnErr }) => {
+          if (fnErr) console.error("Booking email failed:", fnErr);
+        });
+      }
+
       setPickup(""); setDrop(""); setTruckType(""); setWeight(""); setDate("");
-      setCustomerName(""); setCustomerPhone(""); setEstimatedCost(null);
+      setCustomerName(""); setCustomerPhone(""); setCustomerEmail(""); setEstimatedCost(null);
     } catch (error: any) {
       toast.error(error.message);
     } finally {
@@ -131,6 +143,15 @@ const BookTruck = () => {
                   <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15 }} className="space-y-2">
                     <Label htmlFor="customerPhone">{t("phone")} *</Label>
                     <Input id="customerPhone" type="tel" placeholder="+91 98765 43210" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} required />
+                  </motion.div>
+                </div>
+                <div className="grid md:grid-cols-1 gap-5 mt-5">
+                  <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.18 }} className="space-y-2">
+                    <Label htmlFor="customerEmail">
+                      <Mail className="w-4 h-4 inline mr-1" />
+                      {t("email")} (for booking updates)
+                    </Label>
+                    <Input id="customerEmail" type="email" placeholder="your@email.com" value={customerEmail} onChange={(e) => setCustomerEmail(e.target.value)} />
                   </motion.div>
                 </div>
 
