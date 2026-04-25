@@ -3,13 +3,20 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Plus, Pencil, Trash2 } from "lucide-react";
+import { Plus, Pencil, Trash2, X } from "lucide-react";
 import { toast } from "sonner";
 import { useLanguage } from "@/i18n/LanguageContext";
+import ImageUpload from "@/components/admin/ImageUpload";
+import { uploadSiteAsset } from "@/hooks/useSiteContent";
 
-const emptyTruck = { name: "", truck_type: "Mini", capacity: "", location: "", status: "available", price_per_km: "" };
+const emptyTruck = {
+  name: "", truck_type: "Mini", capacity: "", location: "", status: "available",
+  price_per_km: "", description: "", image_url: "",
+  features: [] as string[], gallery: [] as string[],
+};
 
 const AdminTrucks = () => {
   const [trucks, setTrucks] = useState<any[]>([]);
@@ -38,6 +45,10 @@ const AdminTrucks = () => {
       location: form.location,
       status: form.status,
       price_per_km: form.price_per_km ? parseFloat(form.price_per_km) : null,
+      description: form.description || null,
+      image_url: form.image_url || null,
+      features: form.features as any,
+      gallery: form.gallery as any,
     };
 
     if (editTruck) {
@@ -73,6 +84,10 @@ const AdminTrucks = () => {
       location: truck.location,
       status: truck.status,
       price_per_km: truck.price_per_km?.toString() || "",
+      description: truck.description || "",
+      image_url: truck.image_url || "",
+      features: Array.isArray(truck.features) ? truck.features : [],
+      gallery: Array.isArray(truck.gallery) ? truck.gallery : [],
     });
     setOpen(true);
   };
@@ -93,7 +108,7 @@ const AdminTrucks = () => {
               <Plus className="w-4 h-4" /> {t("admin_add_truck")}
             </Button>
           </DialogTrigger>
-          <DialogContent>
+          <DialogContent className="max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>{editTruck ? t("admin_edit_truck") : t("admin_add_truck")}</DialogTitle>
             </DialogHeader>
