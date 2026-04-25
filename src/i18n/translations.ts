@@ -286,7 +286,7 @@ const en: TranslationKeys = {
   about_title: "About Vijayalakshmi Roadlines",
   about_subtitle: "Over 15 years of excellence in road transportation and logistics across India.",
   our_story: "Our Story",
-  about_story_1: "Founded in 2008, Vijayalakshmi Roadlines started with a small fleet of 5 trucks serving local routes in Telangana. Through dedication to reliability and customer satisfaction, we've grown into one of the most trusted logistics companies in South India.",
+  about_story_1: "Founded in 2008, Vijayalakshmi Roadlines started with a small fleet of 5 trucks serving local routes from Solapur, Maharashtra. Through dedication to reliability and customer satisfaction, we've grown into one of the most trusted logistics and container supply companies across India.",
   about_story_2: "Today, with a fleet of 500+ trucks and presence across 28 states, we deliver over 10,000 consignments monthly while maintaining our core promise — reliability, safety, and on-time delivery.",
   experience: "Experience",
   clients: "Clients",
