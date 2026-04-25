@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
-import { Phone, Mail, MapPin } from "lucide-react";
+import { Truck, Phone, Mail, MapPin } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
-import vrLogo from "@/assets/vr-logo.png";
 
 const Footer = () => {
   const { t } = useLanguage();
@@ -13,10 +12,12 @@ const Footer = () => {
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <img src={vrLogo} alt="Vijayalaxmi Roadlines logo" width={40} height={40} className="w-10 h-10 object-contain bg-background rounded-lg p-1" />
+              <div className="w-10 h-10 rounded-lg gradient-primary flex items-center justify-center">
+                <Truck className="w-6 h-6 text-primary-foreground" />
+              </div>
               <div className="leading-tight">
-                <span className="font-bold text-lg">Vijayalaxmi Roadlines</span>
-                <span className="block text-xs opacity-70 -mt-1">Suppliers of Container</span>
+                <span className="font-bold text-lg">Vijayalakshmi</span>
+                <span className="block text-xs opacity-70 -mt-1">Roadlines</span>
               </div>
             </div>
             <p className="text-sm opacity-70 leading-relaxed">
