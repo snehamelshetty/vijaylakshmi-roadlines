@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Truck, Globe } from "lucide-react";
+import { Menu, X, Globe } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { languageLabels, Language } from "@/i18n/translations";
+import vrLogo from "@/assets/vr-logo.png";
 
 const navLinks = [
   { to: "/", key: "nav_home" },
@@ -26,12 +27,10 @@ const Navbar = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-md border-b border-border">
       <div className="container mx-auto flex items-center justify-between h-16 px-4">
         <Link to="/" className="flex items-center gap-2">
-          <div className="w-10 h-10 rounded-lg gradient-primary flex items-center justify-center">
-            <Truck className="w-6 h-6 text-primary-foreground" />
-          </div>
+          <img src={vrLogo} alt="Vijayalaxmi Roadlines logo" width={40} height={40} className="w-10 h-10 object-contain" />
           <div className="leading-tight">
-            <span className="font-bold text-foreground text-lg">Vijayalakshmi</span>
-            <span className="block text-xs text-muted-foreground -mt-1">Roadlines</span>
+            <span className="font-bold text-foreground text-lg">Vijayalaxmi Roadlines</span>
+            <span className="block text-xs text-muted-foreground -mt-1">Suppliers of Container</span>
           </div>
         </Link>
 
