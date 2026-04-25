@@ -366,8 +366,8 @@ const en: TranslationKeys = {
   get_in_touch: "Get in Touch",
   office_address: "Office Address",
   business_hours: "Business Hours",
-  address_text: "123, Transport Nagar, Hyderabad, Telangana 500001",
-  phone_text: "+91 98765 43210",
+  address_text: "Plot No. 28, Bale, Poona Road, Near Gaman Automobiles, Solapur - 413 002",
+  phone_text: "+91 99801 63634, +91 97668 02561, +91 94208 16364",
   email_text: "info@vijayalakshmiroadlines.com",
   hours_text: "Mon - Sat: 8:00 AM - 8:00 PM | Sun: 9:00 AM - 5:00 PM",
 
@@ -582,8 +582,8 @@ const hi: TranslationKeys = {
   get_in_touch: "संपर्क में रहें",
   office_address: "कार्यालय का पता",
   business_hours: "व्यापारिक घंटे",
-  address_text: "123, ट्रांसपोर्ट नगर, हैदराबाद, तेलंगाना 500001",
-  phone_text: "+91 98765 43210",
+  address_text: "प्लॉट नं. 28, बाळे, पूना रोड, गमन ऑटोमोबाइल्स के पास, सोलापूर - 413 002",
+  phone_text: "+91 99801 63634, +91 97668 02561, +91 94208 16364",
   email_text: "info@vijayalakshmiroadlines.com",
   hours_text: "सोम - शनि: सुबह 8:00 - रात 8:00 | रवि: सुबह 9:00 - शाम 5:00",
 
@@ -797,8 +797,8 @@ const mr: TranslationKeys = {
   get_in_touch: "संपर्कात रहा",
   office_address: "कार्यालयाचा पत्ता",
   business_hours: "व्यवसायाचे तास",
-  address_text: "123, ट्रान्सपोर्ट नगर, हैदराबाद, तेलंगणा 500001",
-  phone_text: "+91 98765 43210",
+  address_text: "प्लॉट क्र. 28, बाळे, पूना रोड, गमन ऑटोमोबाईल्स जवळ, सोलापूर - 413 002",
+  phone_text: "+91 99801 63634, +91 97668 02561, +91 94208 16364",
   email_text: "info@vijayalakshmiroadlines.com",
   hours_text: "सोम - शनि: सकाळी 8:00 - रात्री 8:00 | रवि: सकाळी 9:00 - संध्या 5:00",
 
@@ -1012,8 +1012,8 @@ const kn: TranslationKeys = {
   get_in_touch: "ಸಂಪರ್ಕದಲ್ಲಿರಿ",
   office_address: "ಕಚೇರಿ ವಿಳಾಸ",
   business_hours: "ವ್ಯಾಪಾರ ಸಮಯ",
-  address_text: "123, ಟ್ರಾನ್ಸ್‌ಪೋರ್ಟ್ ನಗರ, ಹೈದರಾಬಾದ್, ತೆಲಂಗಾಣ 500001",
-  phone_text: "+91 98765 43210",
+  address_text: "ಪ್ಲಾಟ್ ನಂ. 28, ಬಾಳೆ, ಪೂನಾ ರಸ್ತೆ, ಗಮನ್ ಆಟೋಮೊಬೈಲ್ಸ್ ಬಳಿ, ಸೊಲ್ಲಾಪುರ - 413 002",
+  phone_text: "+91 99801 63634, +91 97668 02561, +91 94208 16364",
   email_text: "info@vijayalakshmiroadlines.com",
   hours_text: "ಸೋಮ - ಶನಿ: ಬೆಳಿಗ್ಗೆ 8:00 - ರಾತ್ರಿ 8:00 | ಭಾನು: ಬೆಳಿಗ್ಗೆ 9:00 - ಸಂಜೆ 5:00",
 
