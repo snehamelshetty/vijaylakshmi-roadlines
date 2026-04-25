@@ -1,8 +1,11 @@
+import { useEffect, useState } from "react";
 import Layout from "@/components/Layout";
 import ParallaxSection from "@/components/ParallaxSection";
 import { motion } from "framer-motion";
 import { Shield, Zap, Clock, Award, Users, Target } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { useSiteSetting } from "@/hooks/useSiteContent";
+import { supabase } from "@/integrations/supabase/client";
 
 const stagger = {
   hidden: {},
@@ -16,19 +19,23 @@ const fadeUp = {
 
 const About = () => {
   const { t } = useLanguage();
+  const { value: about } = useSiteSetting("about");
+  const [team, setTeam] = useState<any[]>([]);
 
-  const values = [
-    { icon: Shield, title: t("reliability"), desc: t("reliability_desc") },
-    { icon: Zap, title: t("speed"), desc: t("speed_desc") },
-    { icon: Clock, title: t("safety"), desc: t("safety_desc") },
-  ];
+  useEffect(() => {
+    supabase
+      .from("team_members")
+      .select("*")
+      .order("display_order")
+      .then(({ data }) => setTeam(data || []));
+  }, []);
 
-  const team = [
-    { name: "V. Ramesh", role: t("founder_md"), initials: "VR" },
-    { name: "S. Lakshmi", role: t("operations_head"), initials: "SL" },
-    { name: "K. Suresh", role: t("fleet_manager"), initials: "KS" },
-    { name: "P. Anand", role: t("customer_relations"), initials: "PA" },
-  ];
+  const valueIcons = [Shield, Zap, Clock];
+  const values = about.values.map((v, i) => ({
+    icon: valueIcons[i % valueIcons.length],
+    title: v.title,
+    desc: v.desc,
+  }));
 
   return (
     <Layout>
@@ -108,7 +115,7 @@ const About = () => {
             className="bg-card rounded-xl p-8 card-shadow"
           >
             <h3 className="text-2xl font-bold text-foreground mb-3">{t("our_mission")}</h3>
-            <p className="text-muted-foreground">{t("mission_text")}</p>
+            <p className="text-muted-foreground">{about.mission}</p>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, x: 30, rotateY: -5 }}
@@ -118,7 +125,7 @@ const About = () => {
             className="bg-card rounded-xl p-8 card-shadow"
           >
             <h3 className="text-2xl font-bold text-foreground mb-3">{t("our_vision")}</h3>
-            <p className="text-muted-foreground">{t("vision_text")}</p>
+            <p className="text-muted-foreground">{about.vision}</p>
           </motion.div>
         </div>
       </section>
@@ -178,24 +185,43 @@ const About = () => {
             viewport={{ once: true }}
             className="grid grid-cols-2 md:grid-cols-4 gap-6"
           >
-            {team.map((member) => (
-              <motion.div
-                key={member.name}
-                variants={fadeUp}
-                whileHover={{ scale: 1.08, y: -5 }}
-                className="text-center"
-              >
+            {team.map((member) => {
+              const initials = member.name.split(" ").map((n: string) => n[0]).join("").slice(0, 2).toUpperCase();
+              return (
                 <motion.div
-                  whileHover={{ rotate: [0, -5, 5, 0] }}
-                  transition={{ duration: 0.4 }}
-                  className="w-20 h-20 rounded-full gradient-secondary flex items-center justify-center mx-auto mb-3 text-secondary-foreground font-bold text-xl shadow-lg"
+                  key={member.id}
+                  variants={fadeUp}
+                  whileHover={{ scale: 1.08, y: -5 }}
+                  className="text-center"
                 >
-                  {member.initials}
+                  {member.photo_url ? (
+                    <motion.img
+                      src={member.photo_url}
+                      alt={member.name}
+                      whileHover={{ rotate: [0, -5, 5, 0] }}
+                      transition={{ duration: 0.4 }}
+                      className="w-20 h-20 rounded-full object-cover mx-auto mb-3 shadow-lg"
+                    />
+                  ) : (
+                    <motion.div
+                      whileHover={{ rotate: [0, -5, 5, 0] }}
+                      transition={{ duration: 0.4 }}
+                      className="w-20 h-20 rounded-full gradient-secondary flex items-center justify-center mx-auto mb-3 text-secondary-foreground font-bold text-xl shadow-lg"
+                    >
+                      {initials}
+                    </motion.div>
+                  )}
+                  <div className="font-semibold text-foreground">{member.name}</div>
+                  <div className="text-sm text-muted-foreground">{member.role}</div>
+                  {member.bio && <div className="text-xs text-muted-foreground mt-1 px-2">{member.bio}</div>}
                 </motion.div>
-                <div className="font-semibold text-foreground">{member.name}</div>
-                <div className="text-sm text-muted-foreground">{member.role}</div>
-              </motion.div>
-            ))}
+              );
+            })}
+            {team.length === 0 && (
+              <div className="col-span-full text-center text-muted-foreground text-sm">
+                Team members will appear here once added.
+              </div>
+            )}
           </motion.div>
         </div>
       </section>
