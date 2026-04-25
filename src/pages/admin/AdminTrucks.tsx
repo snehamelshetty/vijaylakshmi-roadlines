@@ -3,13 +3,20 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Plus, Pencil, Trash2 } from "lucide-react";
+import { Plus, Pencil, Trash2, X } from "lucide-react";
 import { toast } from "sonner";
 import { useLanguage } from "@/i18n/LanguageContext";
+import ImageUpload from "@/components/admin/ImageUpload";
+import { uploadSiteAsset } from "@/hooks/useSiteContent";
 
-const emptyTruck = { name: "", truck_type: "Mini", capacity: "", location: "", status: "available", price_per_km: "" };
+const emptyTruck = {
+  name: "", truck_type: "Mini", capacity: "", location: "", status: "available",
+  price_per_km: "", description: "", image_url: "",
+  features: [] as string[], gallery: [] as string[],
+};
 
 const AdminTrucks = () => {
   const [trucks, setTrucks] = useState<any[]>([]);
@@ -38,6 +45,10 @@ const AdminTrucks = () => {
       location: form.location,
       status: form.status,
       price_per_km: form.price_per_km ? parseFloat(form.price_per_km) : null,
+      description: form.description || null,
+      image_url: form.image_url || null,
+      features: form.features as any,
+      gallery: form.gallery as any,
     };
 
     if (editTruck) {
@@ -73,6 +84,10 @@ const AdminTrucks = () => {
       location: truck.location,
       status: truck.status,
       price_per_km: truck.price_per_km?.toString() || "",
+      description: truck.description || "",
+      image_url: truck.image_url || "",
+      features: Array.isArray(truck.features) ? truck.features : [],
+      gallery: Array.isArray(truck.gallery) ? truck.gallery : [],
     });
     setOpen(true);
   };
@@ -93,7 +108,7 @@ const AdminTrucks = () => {
               <Plus className="w-4 h-4" /> {t("admin_add_truck")}
             </Button>
           </DialogTrigger>
-          <DialogContent>
+          <DialogContent className="max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>{editTruck ? t("admin_edit_truck") : t("admin_add_truck")}</DialogTitle>
             </DialogHeader>
@@ -140,6 +155,72 @@ const AdminTrucks = () => {
               <div className="space-y-2">
                 <Label>{t("admin_location")}</Label>
                 <Input value={form.location} onChange={(e) => setForm({ ...form, location: e.target.value })} placeholder="e.g., Bangalore" />
+              </div>
+              <div className="space-y-2">
+                <Label>Description</Label>
+                <Textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} placeholder="Short description shown on the truck listing" />
+              </div>
+              <ImageUpload
+                label="Main Image"
+                value={form.image_url}
+                onChange={(url) => setForm({ ...form, image_url: url })}
+                folder="trucks"
+              />
+              <div className="space-y-2">
+                <Label>Features</Label>
+                {form.features.map((f, i) => (
+                  <div key={i} className="flex gap-2">
+                    <Input
+                      value={f}
+                      onChange={(e) => {
+                        const next = [...form.features];
+                        next[i] = e.target.value;
+                        setForm({ ...form, features: next });
+                      }}
+                      placeholder="e.g., GPS Tracking"
+                    />
+                    <Button variant="ghost" size="sm" onClick={() => setForm({ ...form, features: form.features.filter((_, j) => j !== i) })}>
+                      <X className="w-4 h-4" />
+                    </Button>
+                  </div>
+                ))}
+                <Button variant="outline" size="sm" onClick={() => setForm({ ...form, features: [...form.features, ""] })}>
+                  <Plus className="w-4 h-4" /> Add Feature
+                </Button>
+              </div>
+              <div className="space-y-2">
+                <Label>Gallery</Label>
+                <div className="flex flex-wrap gap-2">
+                  {form.gallery.map((url, i) => (
+                    <div key={i} className="relative">
+                      <img src={url} alt="" className="w-16 h-16 rounded-lg object-cover border border-border" />
+                      <button
+                        type="button"
+                        onClick={() => setForm({ ...form, gallery: form.gallery.filter((_, j) => j !== i) })}
+                        className="absolute -top-2 -right-2 bg-destructive text-destructive-foreground rounded-full p-0.5"
+                      >
+                        <X className="w-3 h-3" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+                <label className="cursor-pointer inline-flex">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={async (e) => {
+                      const file = e.target.files?.[0];
+                      if (!file) return;
+                      const url = await uploadSiteAsset(file, "trucks/gallery");
+                      if (url) setForm({ ...form, gallery: [...form.gallery, url] });
+                      else toast.error("Upload failed");
+                    }}
+                  />
+                  <span className="px-3 py-2 rounded-md border border-border bg-card hover:bg-muted text-sm">
+                    <Plus className="w-4 h-4 inline" /> Add Gallery Image
+                  </span>
+                </label>
               </div>
               <Button variant="blue" className="w-full" onClick={handleSave}>
                 {editTruck ? t("admin_save_changes") : t("admin_add_truck")}

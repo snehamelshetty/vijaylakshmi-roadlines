@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, Link, Outlet, useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { LayoutDashboard, Truck, Package, LogOut, Menu, X } from "lucide-react";
+import { LayoutDashboard, Truck, Package, LogOut, Menu, X, FileText, Users } from "lucide-react";
 import { toast } from "sonner";
 import { useLanguage } from "@/i18n/LanguageContext";
 
@@ -69,6 +69,8 @@ const AdminDashboard = () => {
     { to: "/admin", icon: LayoutDashboard, label: t("admin_overview"), exact: true },
     { to: "/admin/trucks", icon: Truck, label: t("admin_trucks") },
     { to: "/admin/bookings", icon: Package, label: t("admin_bookings") },
+    { to: "/admin/content", icon: FileText, label: "Site Content" },
+    { to: "/admin/team", icon: Users, label: "Team" },
   ];
 
   return (

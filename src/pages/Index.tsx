@@ -10,9 +10,12 @@ import {
   Warehouse, Zap, Users
 } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { useSiteSetting } from "@/hooks/useSiteContent";
 
 const Index = () => {
   const { t } = useLanguage();
+  const { value: hero } = useSiteSetting("home_hero");
+  const { value: testimonialsData } = useSiteSetting("testimonials");
   const heroRef = useRef<HTMLElement>(null);
   const { scrollYProgress: heroScroll } = useScroll({
     target: heroRef,
@@ -35,11 +38,12 @@ const Index = () => {
     { icon: Zap, title: t("home_express_title"), desc: t("home_express_desc") },
   ];
 
-  const testimonials = [
+  const defaultTestimonials = [
     { name: "Rajesh Kumar", company: "ABC Industries", text: "Vijayalakshmi Roadlines has been our logistics partner for 5 years. Exceptional reliability and service!", rating: 5 },
     { name: "Priya Sharma", company: "XYZ Exports", text: "Their fleet management and tracking system gives us complete visibility. Highly recommended!", rating: 5 },
     { name: "Suresh Reddy", company: "Reddy Enterprises", text: "On-time delivery, competitive rates, and professional team. The best in the business.", rating: 5 },
   ];
+  const testimonials = testimonialsData.items.length > 0 ? testimonialsData.items : defaultTestimonials;
 
   return (
     <Layout>
@@ -60,20 +64,19 @@ const Index = () => {
               {t("hero_badge")}
             </span>
             <h1 className="text-4xl md:text-6xl font-extrabold text-card mb-6 leading-tight">
-              {t("hero_title_1")}{" "}
-              <span className="text-primary">{t("hero_title_2")}</span>
+              {hero.heading}
             </h1>
             <p className="text-lg text-card/80 mb-8 max-w-lg">
-              {t("hero_desc")}
+              {hero.subheading}
             </p>
             <div className="flex flex-wrap gap-4">
               <Button variant="hero" size="lg" asChild>
                 <Link to="/book">
-                  {t("hero_book")} <ArrowRight className="w-5 h-5" />
+                  {hero.cta_primary} <ArrowRight className="w-5 h-5" />
                 </Link>
               </Button>
               <Button variant="heroOutline" size="lg" asChild>
-                <Link to="/services">{t("hero_services")}</Link>
+                <Link to="/tracking">{hero.cta_secondary}</Link>
               </Button>
             </div>
           </motion.div>

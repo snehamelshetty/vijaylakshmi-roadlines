@@ -9,6 +9,7 @@ import { motion } from "framer-motion";
 import { Phone, Mail, MapPin, Clock, Send } from "lucide-react";
 import { toast } from "sonner";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { useSiteSetting } from "@/hooks/useSiteContent";
 
 const Contact = () => {
   const [name, setName] = useState("");
@@ -16,6 +17,7 @@ const Contact = () => {
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
   const { t } = useLanguage();
+  const { value: contact } = useSiteSetting("contact");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,10 +30,10 @@ const Contact = () => {
   };
 
   const contactItems = [
-    { icon: MapPin, title: t("office_address"), desc: t("address_text") },
-    { icon: Phone, title: t("phone"), desc: t("phone_text") },
-    { icon: Mail, title: t("email"), desc: t("email_text") },
-    { icon: Clock, title: t("business_hours"), desc: t("hours_text") },
+    { icon: MapPin, title: t("office_address"), desc: contact.address },
+    { icon: Phone, title: t("phone"), desc: contact.phone },
+    { icon: Mail, title: t("email"), desc: contact.email },
+    { icon: Clock, title: t("business_hours"), desc: contact.hours },
   ];
 
   return (
