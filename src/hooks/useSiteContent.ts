@@ -71,16 +71,16 @@ export function useSiteSetting<K extends keyof typeof DEFAULTS>(
   return { value, loading, refresh: load };
 }
 
-export async function saveSiteSetting(key: string, value: object) {
+export async function saveSiteSetting(key: string, value: Record<string, any>) {
   const { data: existing } = await supabase
     .from("site_settings")
     .select("id")
     .eq("key", key)
     .maybeSingle();
   if (existing) {
-    return supabase.from("site_settings").update({ value }).eq("id", existing.id);
+    return supabase.from("site_settings").update({ value: value as any }).eq("id", existing.id);
   }
-  return supabase.from("site_settings").insert({ key, value });
+  return supabase.from("site_settings").insert([{ key, value: value as any }]);
 }
 
 export async function uploadSiteAsset(file: File, folder: string): Promise<string | null> {
