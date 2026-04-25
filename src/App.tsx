@@ -22,6 +22,8 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminOverview from "./pages/admin/AdminOverview";
 import AdminTrucks from "./pages/admin/AdminTrucks";
 import AdminBookings from "./pages/admin/AdminBookings";
+import AdminContent from "./pages/admin/AdminContent";
+import AdminTeam from "./pages/admin/AdminTeam";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -57,6 +59,8 @@ const App = () => {
                     <Route index element={<AdminOverview />} />
                     <Route path="trucks" element={<AdminTrucks />} />
                     <Route path="bookings" element={<AdminBookings />} />
+                    <Route path="content" element={<AdminContent />} />
+                    <Route path="team" element={<AdminTeam />} />
                   </Route>
                   <Route path="*" element={<NotFound />} />
                 </Routes>

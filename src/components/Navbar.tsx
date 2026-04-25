@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, X, Truck, Globe } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { languageLabels, Language } from "@/i18n/translations";
+import { useSiteSetting } from "@/hooks/useSiteContent";
 
 const navLinks = [
   { to: "/", key: "nav_home" },
@@ -21,17 +22,22 @@ const Navbar = () => {
   const [langOpen, setLangOpen] = useState(false);
   const location = useLocation();
   const { t, language, setLanguage } = useLanguage();
+  const { value: brand } = useSiteSetting("brand");
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-md border-b border-border">
       <div className="container mx-auto flex items-center justify-between h-16 px-4">
         <Link to="/" className="flex items-center gap-2">
-          <div className="w-10 h-10 rounded-lg gradient-primary flex items-center justify-center">
-            <Truck className="w-6 h-6 text-primary-foreground" />
-          </div>
+          {brand.logo_url ? (
+            <img src={brand.logo_url} alt={brand.name} className="w-10 h-10 rounded-lg object-cover" />
+          ) : (
+            <div className="w-10 h-10 rounded-lg gradient-primary flex items-center justify-center">
+              <Truck className="w-6 h-6 text-primary-foreground" />
+            </div>
+          )}
           <div className="leading-tight">
-            <span className="font-bold text-foreground text-lg">Vijayalakshmi</span>
-            <span className="block text-xs text-muted-foreground -mt-1">Roadlines</span>
+            <span className="font-bold text-foreground text-lg">{brand.name}</span>
+            <span className="block text-xs text-muted-foreground -mt-1">{brand.subtitle}</span>
           </div>
         </Link>
 

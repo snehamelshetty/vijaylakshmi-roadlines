@@ -1,9 +1,12 @@
 import { Link } from "react-router-dom";
 import { Truck, Phone, Mail, MapPin } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { useSiteSetting } from "@/hooks/useSiteContent";
 
 const Footer = () => {
   const { t } = useLanguage();
+  const { value: brand } = useSiteSetting("brand");
+  const { value: contact } = useSiteSetting("contact");
 
   return (
     <footer className="bg-foreground text-background">
@@ -12,12 +15,16 @@ const Footer = () => {
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 rounded-lg gradient-primary flex items-center justify-center">
-                <Truck className="w-6 h-6 text-primary-foreground" />
-              </div>
+              {brand.logo_url ? (
+                <img src={brand.logo_url} alt={brand.name} className="w-10 h-10 rounded-lg object-cover" />
+              ) : (
+                <div className="w-10 h-10 rounded-lg gradient-primary flex items-center justify-center">
+                  <Truck className="w-6 h-6 text-primary-foreground" />
+                </div>
+              )}
               <div className="leading-tight">
-                <span className="font-bold text-lg">Vijayalakshmi</span>
-                <span className="block text-xs opacity-70 -mt-1">Roadlines</span>
+                <span className="font-bold text-lg">{brand.name}</span>
+                <span className="block text-xs opacity-70 -mt-1">{brand.subtitle}</span>
               </div>
             </div>
             <p className="text-sm opacity-70 leading-relaxed">
@@ -55,15 +62,15 @@ const Footer = () => {
             <div className="flex flex-col gap-3 text-sm opacity-70">
               <div className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 mt-0.5 shrink-0" />
-                <span>{t("address_text")}</span>
+                <span>{contact.address}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="w-4 h-4 shrink-0" />
-                <span>{t("phone_text")}</span>
+                <span>{contact.phone}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4 shrink-0" />
-                <span>{t("email_text")}</span>
+                <span>{contact.email}</span>
               </div>
             </div>
           </div>
