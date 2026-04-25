@@ -109,6 +109,63 @@ export type Database = {
         }
         Relationships: []
       }
+      site_settings: {
+        Row: {
+          created_at: string
+          id: string
+          key: string
+          updated_at: string
+          value: Json
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          key: string
+          updated_at?: string
+          value?: Json
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          key?: string
+          updated_at?: string
+          value?: Json
+        }
+        Relationships: []
+      }
+      team_members: {
+        Row: {
+          bio: string | null
+          created_at: string
+          display_order: number
+          id: string
+          name: string
+          photo_url: string | null
+          role: string
+          updated_at: string
+        }
+        Insert: {
+          bio?: string | null
+          created_at?: string
+          display_order?: number
+          id?: string
+          name: string
+          photo_url?: string | null
+          role: string
+          updated_at?: string
+        }
+        Update: {
+          bio?: string | null
+          created_at?: string
+          display_order?: number
+          id?: string
+          name?: string
+          photo_url?: string | null
+          role?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       tracking_events: {
         Row: {
           booking_id: string
@@ -154,6 +211,9 @@ export type Database = {
         Row: {
           capacity: string
           created_at: string
+          description: string | null
+          features: Json
+          gallery: Json
           id: string
           image_url: string | null
           location: string
@@ -166,6 +226,9 @@ export type Database = {
         Insert: {
           capacity: string
           created_at?: string
+          description?: string | null
+          features?: Json
+          gallery?: Json
           id?: string
           image_url?: string | null
           location: string
@@ -178,6 +241,9 @@ export type Database = {
         Update: {
           capacity?: string
           created_at?: string
+          description?: string | null
+          features?: Json
+          gallery?: Json
           id?: string
           image_url?: string | null
           location?: string
