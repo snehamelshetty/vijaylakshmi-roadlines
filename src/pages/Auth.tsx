@@ -264,41 +264,73 @@ const Auth = () => {
         </motion.form>
       </section>
 
-      <Dialog open={forgotOpen} onOpenChange={setForgotOpen}>
+      <Dialog open={forgotOpen} onOpenChange={(o) => { setForgotOpen(o); if (!o) { setOtpSent(false); setOtpCode(""); setNewPassword(""); } }}>
         <DialogContent>
-          <form onSubmit={handleForgot}>
-            <DialogHeader>
-              <DialogTitle>Reset your password</DialogTitle>
-              <DialogDescription>
-                Enter your account email and we'll send you a secure link to reset your password.
-              </DialogDescription>
-            </DialogHeader>
-            <div className="space-y-2 py-4">
-              <Label htmlFor="forgotEmail">
-                <Mail className="w-4 h-4 inline mr-1" />
-                Email
-              </Label>
-              <Input
-                id="forgotEmail"
-                type="email"
-                value={forgotEmail}
-                onChange={(e) => setForgotEmail(e.target.value)}
-                placeholder="you@example.com"
-                required
-              />
-              <p className="text-xs text-muted-foreground">
-                Note: Password reset is sent via email. SMS-based OTP reset isn't available — please use the email tied to your account.
-              </p>
-            </div>
-            <DialogFooter>
-              <Button type="button" variant="outline" onClick={() => setForgotOpen(false)}>
-                Cancel
-              </Button>
-              <Button type="submit" variant="blue" disabled={forgotLoading}>
-                {forgotLoading ? "Sending..." : "Send reset link"}
-              </Button>
-            </DialogFooter>
-          </form>
+          {!otpSent ? (
+            <form onSubmit={handleForgot}>
+              <DialogHeader>
+                <DialogTitle>Reset your password</DialogTitle>
+                <DialogDescription>
+                  Choose how you'd like to receive your reset code.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="space-y-4 py-4">
+                <div className="flex gap-2">
+                  <Button type="button" variant={forgotMethod === "email" ? "blue" : "outline"} size="sm" onClick={() => setForgotMethod("email")} className="flex-1">
+                    <Mail className="w-4 h-4 mr-1" /> Email link
+                  </Button>
+                  <Button type="button" variant={forgotMethod === "sms" ? "blue" : "outline"} size="sm" onClick={() => setForgotMethod("sms")} className="flex-1">
+                    <Phone className="w-4 h-4 mr-1" /> SMS OTP
+                  </Button>
+                </div>
+                {forgotMethod === "email" ? (
+                  <div className="space-y-2">
+                    <Label htmlFor="forgotEmail"><Mail className="w-4 h-4 inline mr-1" />Email</Label>
+                    <Input id="forgotEmail" type="email" value={forgotEmail} onChange={(e) => setForgotEmail(e.target.value)} placeholder="you@example.com" required />
+                    <p className="text-xs text-muted-foreground">We'll email a secure reset link to your account.</p>
+                  </div>
+                ) : (
+                  <div className="space-y-2">
+                    <Label htmlFor="forgotPhone"><Phone className="w-4 h-4 inline mr-1" />Phone</Label>
+                    <Input id="forgotPhone" type="tel" value={forgotPhone} onChange={(e) => setForgotPhone(e.target.value)} placeholder="+91 98765 43210" required />
+                    <p className="text-xs text-muted-foreground">We'll text a 6-digit OTP to your verified phone number.</p>
+                  </div>
+                )}
+              </div>
+              <DialogFooter>
+                <Button type="button" variant="outline" onClick={() => setForgotOpen(false)}>Cancel</Button>
+                <Button type="submit" variant="blue" disabled={forgotLoading}>
+                  {forgotLoading ? "Sending..." : forgotMethod === "email" ? "Send reset link" : "Send OTP"}
+                </Button>
+              </DialogFooter>
+            </form>
+          ) : (
+            <form onSubmit={handleVerifyOtp}>
+              <DialogHeader>
+                <DialogTitle>Enter OTP & new password</DialogTitle>
+                <DialogDescription>Enter the 6-digit code sent to {forgotPhone} and choose a new password.</DialogDescription>
+              </DialogHeader>
+              <div className="space-y-4 py-4">
+                <div className="space-y-2">
+                  <Label htmlFor="otp">OTP code</Label>
+                  <Input id="otp" inputMode="numeric" maxLength={6} value={otpCode} onChange={(e) => setOtpCode(e.target.value)} placeholder="123456" required />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="newPwd">New password</Label>
+                  <Input id="newPwd" type="password" minLength={6} value={newPassword} onChange={(e) => setNewPassword(e.target.value)} placeholder="••••••••" required />
+                </div>
+                <button type="button" onClick={handleForgot as any} className="text-xs text-secondary hover:underline">
+                  Didn't get it? Resend OTP
+                </button>
+              </div>
+              <DialogFooter>
+                <Button type="button" variant="outline" onClick={() => { setOtpSent(false); setOtpCode(""); setNewPassword(""); }}>Back</Button>
+                <Button type="submit" variant="blue" disabled={forgotLoading}>
+                  {forgotLoading ? "Verifying..." : "Verify & update password"}
+                </Button>
+              </DialogFooter>
+            </form>
+          )}
         </DialogContent>
       </Dialog>
     </Layout>
