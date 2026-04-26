@@ -81,25 +81,61 @@ const Auth = () => {
 
   const handleForgot = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!forgotEmail) {
-      toast.error("Please enter your email");
-      return;
-    }
     setForgotLoading(true);
     try {
-      const { error } = await supabase.auth.resetPasswordForEmail(forgotEmail, {
-        redirectTo: `${window.location.origin}/reset-password`,
-      });
-      if (error) throw error;
-      toast.success("Password reset link sent! Check your email.");
-      setForgotOpen(false);
-      setForgotEmail("");
+      if (forgotMethod === "email") {
+        if (!forgotEmail) throw new Error("Please enter your email");
+        const { error } = await supabase.auth.resetPasswordForEmail(forgotEmail, {
+          redirectTo: `${window.location.origin}/reset-password`,
+        });
+        if (error) throw error;
+        toast.success("Password reset link sent! Check your email.");
+        setForgotOpen(false);
+        setForgotEmail("");
+      } else {
+        if (!forgotPhone) throw new Error("Please enter your phone number");
+        const { error } = await supabase.auth.signInWithOtp({ phone: forgotPhone });
+        if (error) throw error;
+        setOtpSent(true);
+        toast.success("OTP sent to your phone");
+      }
     } catch (error: any) {
       toast.error(error.message);
     } finally {
       setForgotLoading(false);
     }
   };
+
+  const handleVerifyOtp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!otpCode || newPassword.length < 6) {
+      toast.error("Enter the OTP and a new password (min 6 chars)");
+      return;
+    }
+    setForgotLoading(true);
+    try {
+      const { error: vErr } = await supabase.auth.verifyOtp({
+        phone: forgotPhone,
+        token: otpCode,
+        type: "sms",
+      });
+      if (vErr) throw vErr;
+      const { error: uErr } = await supabase.auth.updateUser({ password: newPassword });
+      if (uErr) throw uErr;
+      toast.success("Password updated! You're signed in.");
+      setForgotOpen(false);
+      setOtpSent(false);
+      setOtpCode("");
+      setNewPassword("");
+      setForgotPhone("");
+      navigate("/dashboard");
+    } catch (error: any) {
+      toast.error(error.message);
+    } finally {
+      setForgotLoading(false);
+    }
+  };
+
 
   return (
     <Layout>
