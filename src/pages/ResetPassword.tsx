@@ -15,6 +15,8 @@ const ResetPassword = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [ready, setReady] = useState(false);
+  const [resendEmail, setResendEmail] = useState("");
+  const [resendLoading, setResendLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -78,9 +80,43 @@ const ResetPassword = () => {
           className="bg-card rounded-xl p-8 card-shadow border border-border"
         >
           {!ready ? (
-            <p className="text-center text-muted-foreground">
-              Open this page from the password reset link in your email.
-            </p>
+            <div className="space-y-4 text-center">
+              <p className="text-muted-foreground">
+                Open this page from the password reset link in your email. Didn't receive it?
+              </p>
+              <div className="space-y-2 text-left">
+                <Label htmlFor="resendEmail">Email</Label>
+                <Input
+                  id="resendEmail"
+                  type="email"
+                  value={resendEmail}
+                  onChange={(e) => setResendEmail(e.target.value)}
+                  placeholder="you@example.com"
+                />
+              </div>
+              <Button
+                type="button"
+                variant="blue"
+                className="w-full"
+                disabled={resendLoading || !resendEmail}
+                onClick={async () => {
+                  setResendLoading(true);
+                  try {
+                    const { error } = await supabase.auth.resetPasswordForEmail(resendEmail, {
+                      redirectTo: `${window.location.origin}/reset-password`,
+                    });
+                    if (error) throw error;
+                    toast.success("Reset link sent again. Check your inbox & spam folder.");
+                  } catch (err: any) {
+                    toast.error(err.message);
+                  } finally {
+                    setResendLoading(false);
+                  }
+                }}
+              >
+                {resendLoading ? "Sending..." : "Resend reset link"}
+              </Button>
+            </div>
           ) : (
             <div className="space-y-5">
               <div className="space-y-2">
