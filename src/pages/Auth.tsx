@@ -28,8 +28,13 @@ const Auth = () => {
   const [loading, setLoading] = useState(false);
 
   const [forgotOpen, setForgotOpen] = useState(false);
+  const [forgotMethod, setForgotMethod] = useState<"email" | "sms">("email");
   const [forgotEmail, setForgotEmail] = useState("");
+  const [forgotPhone, setForgotPhone] = useState("");
   const [forgotLoading, setForgotLoading] = useState(false);
+  const [otpSent, setOtpSent] = useState(false);
+  const [otpCode, setOtpCode] = useState("");
+  const [newPassword, setNewPassword] = useState("");
 
   const navigate = useNavigate();
   const { t } = useLanguage();
