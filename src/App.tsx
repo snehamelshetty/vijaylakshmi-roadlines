@@ -17,6 +17,7 @@ import TrucksAvailable from "./pages/TrucksAvailable";
 import Contact from "./pages/Contact";
 import Tracking from "./pages/Tracking";
 import Auth from "./pages/Auth";
+import ResetPassword from "./pages/ResetPassword";
 import CustomerDashboard from "./pages/CustomerDashboard";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminOverview from "./pages/admin/AdminOverview";
@@ -54,6 +55,7 @@ const App = () => {
                   <Route path="/contact" element={<Contact />} />
                   <Route path="/tracking" element={<Tracking />} />
                   <Route path="/auth" element={<Auth />} />
+                  <Route path="/reset-password" element={<ResetPassword />} />
                   <Route path="/dashboard" element={<CustomerDashboard />} />
                   <Route path="/admin" element={<AdminDashboard />}>
                     <Route index element={<AdminOverview />} />
