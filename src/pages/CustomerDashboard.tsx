@@ -83,7 +83,7 @@ const CustomerDashboard = () => {
 INVOICE
 ========================================
 Vijayalakshmi Roadlines
-123, Transport Nagar, Hyderabad, Telangana 500001
+Solapur, Maharashtra 413001
 
 Tracking ID: ${booking.tracking_id}
 Date: ${new Date(booking.created_at).toLocaleDateString()}
