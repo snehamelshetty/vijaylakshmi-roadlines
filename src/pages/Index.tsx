@@ -25,7 +25,7 @@ const Index = () => {
   const heroOpacity = useTransform(heroScroll, [0, 0.8], [1, 0]);
 
   const stats = [
-    { icon: Truck, value: "500+", label: t("stat_trucks") },
+    { icon: Truck, value: "15+", label: t("stat_trucks") },
     { icon: MapPin, value: "28+", label: t("stat_states") },
     { icon: Package, value: "10K+", label: t("stat_deliveries") },
     { icon: Users, value: "2000+", label: t("stat_clients") },
