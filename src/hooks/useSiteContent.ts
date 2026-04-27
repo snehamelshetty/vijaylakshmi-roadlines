@@ -18,6 +18,7 @@ export type ContactSettings = {
   phone: string;
   email: string;
   hours: string;
+  map_embed: string;
 };
 export type TestimonialItem = { name: string; company: string; text: string; rating: number };
 export type TestimonialsSettings = { items: TestimonialItem[] };
