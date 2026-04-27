@@ -41,10 +41,11 @@ export const DEFAULTS = {
     ],
   } as AboutSettings,
   contact: {
-    address: "Hyderabad, Telangana, India",
+    address: "Solapur, Maharashtra, India",
     phone: "+91 98765 43210",
     email: "info@vijayalakshmiroadlines.com",
     hours: "Mon-Sat 9am-7pm",
+    map_embed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3787.5!2d75.9064!3d17.6599!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTfCsDM5JzM1LjYiTiA3NcKwNTQnMjMuMCJF!5e0!3m2!1sen!2sin!4v1700000000000",
   } as ContactSettings,
   testimonials: { items: [] } as TestimonialsSettings,
 };
