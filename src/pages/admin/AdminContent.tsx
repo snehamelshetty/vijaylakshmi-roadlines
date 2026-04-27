@@ -160,6 +160,18 @@ const AdminContent = () => {
             <Label>Business Hours</Label>
             <Input value={contact.hours} onChange={(e) => setContact({ ...contact, hours: e.target.value })} />
           </div>
+          <div className="space-y-2">
+            <Label>Google Maps Embed URL</Label>
+            <Textarea
+              rows={3}
+              placeholder="Paste the src URL from Google Maps → Share → Embed a map"
+              value={contact.map_embed}
+              onChange={(e) => setContact({ ...contact, map_embed: e.target.value })}
+            />
+            <p className="text-xs text-muted-foreground">
+              Tip: Open Google Maps, find your location, click Share → Embed a map → copy only the URL inside src="...".
+            </p>
+          </div>
           <Button variant="blue" onClick={() => save("contact", contact)}>Save Contact</Button>
         </TabsContent>
 
