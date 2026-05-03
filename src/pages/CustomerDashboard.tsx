@@ -83,7 +83,8 @@ const CustomerDashboard = () => {
 INVOICE
 ========================================
 Vijayalakshmi Roadlines
-Solapur, Maharashtra 413001
+Solapur, Maharashtra 413001, India
+Phone: +91 98765 43210
 
 Tracking ID: ${booking.tracking_id}
 Date: ${new Date(booking.created_at).toLocaleDateString()}
