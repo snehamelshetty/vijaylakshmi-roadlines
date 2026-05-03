@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import Layout from "@/components/Layout";
 import ParallaxSection from "@/components/ParallaxSection";
 import heroImage from "@/assets/hero-trucks.jpg";
+import siddheshwarImg from "@/assets/siddheshwar.png";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import {
@@ -27,8 +28,8 @@ const Index = () => {
   const stats = [
     { icon: Truck, value: "15+", label: t("stat_trucks") },
     { icon: MapPin, value: "28+", label: t("stat_states") },
-    { icon: Package, value: "10K+", label: t("stat_deliveries") },
-    { icon: Users, value: "2000+", label: t("stat_clients") },
+    { icon: Package, value: "20+", label: t("stat_deliveries") },
+    { icon: Users, value: "100+", label: t("stat_clients") },
   ];
 
   const services = [
@@ -52,6 +53,40 @@ const Index = () => {
         <motion.div className="absolute inset-0" style={{ y: heroY }}>
           <img src={heroImage} alt="Fleet of trucks on highway" className="w-full h-full object-cover scale-110" />
           <div className="absolute inset-0 hero-overlay" />
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="absolute top-6 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center"
+        >
+          <div
+            className="overflow-hidden bg-card/10 backdrop-blur-sm"
+            style={{
+              width: 72,
+              height: 92,
+              borderRadius: "50%",
+              border: "1.5px solid #FFD700",
+              boxShadow: "0 0 20px rgba(255, 215, 0, 0.5), 0 4px 12px rgba(0,0,0,0.3)",
+            }}
+          >
+            <img
+              src={siddheshwarImg}
+              alt="Shri Siddheshwar"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <p
+            className="mt-2 text-center font-semibold tracking-wide"
+            style={{
+              color: "#FFD700",
+              fontFamily: "'Tiro Devanagari Sanskrit', 'Noto Serif Devanagari', serif",
+              fontSize: "14px",
+              textShadow: "0 1px 4px rgba(0,0,0,0.6)",
+            }}
+          >
+            ॥ श्री सिद्धेश्वर प्रसन्न ॥
+          </p>
         </motion.div>
         <motion.div className="relative container mx-auto px-4 py-20" style={{ opacity: heroOpacity }}>
           <motion.div

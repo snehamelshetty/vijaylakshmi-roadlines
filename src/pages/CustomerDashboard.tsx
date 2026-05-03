@@ -25,6 +25,11 @@ const statusSteps = [
   { key: "delivered", icon: CheckCircle2, label: "Delivered" },
 ];
 
+const cityFromLocation = (loc?: string) => {
+  if (!loc) return "";
+  return loc.split(",")[0].trim();
+};
+
 const CustomerDashboard = () => {
   const [user, setUser] = useState<any>(null);
   const [bookings, setBookings] = useState<any[]>([]);
@@ -83,7 +88,8 @@ const CustomerDashboard = () => {
 INVOICE
 ========================================
 Vijayalakshmi Roadlines
-Solapur, Maharashtra 413001
+Solapur, Maharashtra 413001, India
+Phone: +91 98765 43210
 
 Tracking ID: ${booking.tracking_id}
 Date: ${new Date(booking.created_at).toLocaleDateString()}
@@ -241,6 +247,12 @@ Thank you for choosing Vijayalakshmi Roadlines!
                         <span className={`text-xs mt-2 font-medium ${i <= currentStatusIndex ? "text-secondary" : "text-muted-foreground"}`}>
                           {step.label}
                         </span>
+                        {(step.key === "booked" || step.key === "picked_up") && selectedBooking?.pickup_location && (
+                          <span className="text-[10px] text-muted-foreground mt-0.5">{cityFromLocation(selectedBooking.pickup_location)}</span>
+                        )}
+                        {(step.key === "in_transit" || step.key === "delivered") && selectedBooking?.delivery_location && (
+                          <span className="text-[10px] text-muted-foreground mt-0.5">{cityFromLocation(selectedBooking.delivery_location)}</span>
+                        )}
                       </div>
                     ))}
                   </div>
