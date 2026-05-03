@@ -278,6 +278,31 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_booking_by_tracking_id: {
+        Args: { p_tracking_id: string }
+        Returns: {
+          created_at: string
+          delivery_location: string
+          id: string
+          pickup_date: string
+          pickup_location: string
+          status: string
+          tracking_id: string
+          truck_type: string
+        }[]
+      }
+      get_tracking_events_by_tracking_id: {
+        Args: { p_tracking_id: string }
+        Returns: {
+          created_at: string
+          description: string
+          id: string
+          latitude: number
+          location: string
+          longitude: number
+          status: string
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
