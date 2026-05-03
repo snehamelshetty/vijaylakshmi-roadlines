@@ -84,7 +84,7 @@ const About = () => {
             >
               {[
                 { icon: Award, label: "15+", sub: t("experience") },
-                { icon: Users, label: "2000+", sub: t("clients") },
+                { icon: Users, label: "100+", sub: t("clients") },
                 { icon: Target, label: "98%", sub: t("on_time_rate") },
                 { icon: Shield, label: "ISO", sub: t("certified") },
               ].map((item) => (

@@ -27,8 +27,8 @@ const Index = () => {
   const stats = [
     { icon: Truck, value: "15+", label: t("stat_trucks") },
     { icon: MapPin, value: "28+", label: t("stat_states") },
-    { icon: Package, value: "10K+", label: t("stat_deliveries") },
-    { icon: Users, value: "2000+", label: t("stat_clients") },
+    { icon: Package, value: "20+", label: t("stat_deliveries") },
+    { icon: Users, value: "100+", label: t("stat_clients") },
   ];
 
   const services = [
