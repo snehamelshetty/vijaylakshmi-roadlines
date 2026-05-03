@@ -213,6 +213,12 @@ const Tracking = () => {
                       }`}>
                         {step.label}
                       </span>
+                      {(step.key === "booked" || step.key === "picked_up") && booking?.pickup_location && (
+                        <span className="text-[10px] text-muted-foreground mt-0.5">{cityFromLocation(booking.pickup_location)}</span>
+                      )}
+                      {(step.key === "in_transit" || step.key === "delivered") && booking?.delivery_location && (
+                        <span className="text-[10px] text-muted-foreground mt-0.5">{cityFromLocation(booking.delivery_location)}</span>
+                      )}
                     </div>
                   ))}
                 </div>

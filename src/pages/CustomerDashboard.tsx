@@ -25,6 +25,11 @@ const statusSteps = [
   { key: "delivered", icon: CheckCircle2, label: "Delivered" },
 ];
 
+const cityFromLocation = (loc?: string) => {
+  if (!loc) return "";
+  return loc.split(",")[0].trim();
+};
+
 const CustomerDashboard = () => {
   const [user, setUser] = useState<any>(null);
   const [bookings, setBookings] = useState<any[]>([]);
