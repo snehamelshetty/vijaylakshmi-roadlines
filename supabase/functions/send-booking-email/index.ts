@@ -12,6 +12,29 @@ Deno.serve(async (req) => {
   }
 
   try {
+    // AuthN: require a JWT
+    const authHeader = req.headers.get("Authorization") ?? "";
+    const token = authHeader.replace(/^Bearer\s+/i, "");
+    if (!token) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        status: 401,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+    const anonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
+    const supabaseUser = createClient(supabaseUrl, anonKey, {
+      global: { headers: { Authorization: `Bearer ${token}` } },
+    });
+    const { data: userData, error: userErr } = await supabaseUser.auth.getUser(token);
+    if (userErr || !userData?.user) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        status: 401,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     const { booking_id } = await req.json();
 
     if (!booking_id) {
@@ -22,9 +45,28 @@ Deno.serve(async (req) => {
     }
 
     const supabaseAdmin = createClient(
-      Deno.env.get("SUPABASE_URL")!,
+      supabaseUrl,
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
     );
+
+    // AuthZ: caller must be the booking owner OR an admin
+    const { data: isAdmin } = await supabaseUser.rpc("has_role", {
+      _user_id: userData.user.id,
+      _role: "admin",
+    });
+    if (!isAdmin) {
+      const { data: ownerCheck } = await supabaseAdmin
+        .from("bookings")
+        .select("user_id")
+        .eq("id", booking_id)
+        .maybeSingle();
+      if (!ownerCheck || ownerCheck.user_id !== userData.user.id) {
+        return new Response(JSON.stringify({ error: "Forbidden" }), {
+          status: 403,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+    }
 
     const { data: booking, error: fetchError } = await supabaseAdmin
       .from("bookings")

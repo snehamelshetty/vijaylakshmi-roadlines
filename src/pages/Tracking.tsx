@@ -40,13 +40,11 @@ const Tracking = () => {
     setEvents([]);
 
     try {
-      const { data: bookingData, error: bookingError } = await supabase
-        .from("bookings")
-        .select("*")
-        .eq("tracking_id", trackingId.trim().toUpperCase())
-        .maybeSingle();
+      const { data: bookingRows, error: bookingError } = await supabase
+        .rpc("get_booking_by_tracking_id", { p_tracking_id: trackingId.trim().toUpperCase() });
 
       if (bookingError) throw bookingError;
+      const bookingData = Array.isArray(bookingRows) ? bookingRows[0] : bookingRows;
       if (!bookingData) {
         toast.error(t("tracking_not_found"));
         setLoading(false);
@@ -56,10 +54,7 @@ const Tracking = () => {
       setBooking(bookingData);
 
       const { data: eventsData } = await supabase
-        .from("tracking_events")
-        .select("*")
-        .eq("booking_id", bookingData.id)
-        .order("created_at", { ascending: true });
+        .rpc("get_tracking_events_by_tracking_id", { p_tracking_id: trackingId.trim().toUpperCase() });
 
       setEvents(eventsData || []);
     } catch (error: any) {
