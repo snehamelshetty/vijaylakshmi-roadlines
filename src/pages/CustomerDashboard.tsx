@@ -247,6 +247,12 @@ Thank you for choosing Vijayalakshmi Roadlines!
                         <span className={`text-xs mt-2 font-medium ${i <= currentStatusIndex ? "text-secondary" : "text-muted-foreground"}`}>
                           {step.label}
                         </span>
+                        {(step.key === "booked" || step.key === "picked_up") && selectedBooking?.pickup_location && (
+                          <span className="text-[10px] text-muted-foreground mt-0.5">{cityFromLocation(selectedBooking.pickup_location)}</span>
+                        )}
+                        {(step.key === "in_transit" || step.key === "delivered") && selectedBooking?.delivery_location && (
+                          <span className="text-[10px] text-muted-foreground mt-0.5">{cityFromLocation(selectedBooking.delivery_location)}</span>
+                        )}
                       </div>
                     ))}
                   </div>
